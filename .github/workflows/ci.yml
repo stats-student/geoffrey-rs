@@ -1,3 +1,5 @@
+# pipeline adapted from - 
+# https://github.com/rust-lang/rust-analyzer/blob/master/.github/workflows/ci.yaml
 name: CI
 
 on:
@@ -63,3 +65,41 @@ jobs:
         for target in ${{ env.targets }}; do
           cargo check --target=$target --all-targets
         done
+  
+  fmt:
+    name: Fmt
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Install Rust toolchain
+      run: |
+        rustup update --no-self-update stable
+        rustup component add rustfmt
+    
+    - name: Cache Dependencies
+      uses: Swatinem/rust-cache@v2
+
+    - name: Check formatting
+      run: cargo fmt --all -- --check
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Install Rust toolchain
+      run: |
+        rustup update --no-self-update stable
+        rustup component add clippy
+    
+    - name: Cache Dependencies
+      uses: Swatinem/rust-cache@v2
+
+    - name: Lint code
+      run: cargo clippy -- -D warnings
