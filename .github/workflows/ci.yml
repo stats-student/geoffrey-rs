@@ -7,16 +7,59 @@ on:
     branches: [ "main" ]
 
 env:
-  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  RUST_BACKTRACE: short
+  RUSTFLAGS: "-D warnings"
 
 jobs:
-  build:
+  test:
+    name: Test
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build
-      run: cargo build --verbose
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Install Rust toolchain
+      run: |
+        rustup update --no-self-update stable
+        rustup component add rustfmt rust-src
+
+    - name: Cache dependencies
+      uses: Swatinem/rust-cache@v2
+
+    - name: Compile
+      run: cargo test --all-features --no-run --locked
+
     - name: Run tests
-      run: cargo test --verbose
+      run: cargo test --all-features
+
+  rust-cross:
+    name: Rust Cross
+    runs-on: ubuntu-latest
+    
+    env:
+      targets: "aarch64-unknown-linux-gnu x86_64-apple-darwin x86_64-pc-windows-gnu x86_64-pc-windows-msvc x86_64-unknown-linux-gnu"       
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Install Rust toolchain
+      run: |
+        rustup update --no-self-update stable
+        rustup target add ${{ env.targets }}
+
+    - name: Cache Dependencies
+      uses: Swatinem/rust-cache@v2
+
+    - name: Check
+      run: |
+        for target in ${{ env.targets }}; do
+          cargo check --target=$target --all-targets
+        done
