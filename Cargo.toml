@@ -2,5 +2,12 @@
 name = "geoffrey"
 version = "0.1.0"
 edition = "2021"
+description = "A simple tool to automate the creation of some folders and files for data science projects"
 
 [dependencies]
+clap = { version = "3.2.21", features = ["derive"] }
+
+[dev-dependencies]
+assert_cmd = "2.0.4"
+predicates = "2.1.1"
+rand = "0.8.5"
