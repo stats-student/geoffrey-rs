@@ -2,6 +2,8 @@ use clap::{AppSettings, Parser, Subcommand};
 use std::fs::create_dir;
 use std::path::{PathBuf};
 
+use geoffrey::create_command::Create;
+
 #[derive(Parser)]
 #[clap(version, about, long_about = None, setting = AppSettings::SubcommandRequiredElseHelp)]
 struct Geoffrey {
@@ -13,15 +15,7 @@ struct Geoffrey {
 #[clap(setting = AppSettings::SubcommandRequiredElseHelp)]
 enum Commands {
     /// Creates a new data science project managed by geoffrey
-    Create {
-        /// The name of the project to create
-        #[clap(value_parser)]
-        name: PathBuf,
-
-        /// Whether to create the parent directories in the project name
-        #[clap(short, long)]
-        parents: bool,
-    },
+    Create(Create),
     /// Builds a documentation site for the project
     BuildDocs {
         /// The location for the documentation website
@@ -50,10 +44,10 @@ fn main() {
     let cli = Geoffrey::parse();
 
     match &cli.command {
-        Some(Commands::Create { name, parents }) => {
-            create_dir(&name).expect("Project folder couldn't be created");
+        Some(Commands::Create(Create)) => {
+            create_dir(&Create.name).expect("Project folder couldn't be created");
 
-            let name_str = name
+            let name_str = Create.name
                 .file_name()
                 .unwrap()
                 .to_str()
