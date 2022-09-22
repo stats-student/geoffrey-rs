@@ -128,30 +128,29 @@ fn errors_on_permission_denied() -> () {
                 fs::create_dir("read_only_test_dir").unwrap();
 
                 env::set_current_dir("read_only_test_dir").expect("Can't change to read only dir");
-        
-                process::Command::new("Get-Item")
-                    .arg("-Path")
+
+                process::Command::new("icacls")
                     .arg(".")
-                    .arg("|")
-                    .arg("$_.IsReadOnly = $true")
+                    .arg("/GRANT")
+                    .arg("*S-1-1-0:F")
                     .output()
                     .expect("Unable to change permissions");
             } else {
                 fs::create_dir("read_only_test_dir").unwrap();
 
                 env::set_current_dir("read_only_test_dir").expect("Can't change to read only dir");
-                
+
                 process::Command::new("chmod")
                     .arg("444")
                     .arg(".")
                     .output()
                     .expect("Unable to change permissions");
             };
-        
+
             let create: Create = Create {
                 name: path::PathBuf::from("./test_project/"),
                 parents: false,
-            }; 
+            };
 
             create.create_root()
         },

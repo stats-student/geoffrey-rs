@@ -16,26 +16,26 @@ pub struct Create {
 
 impl Create {
     /// Creates a new style class to apply color to text
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `col_256` - The xterm number corresponding to the required color
-    /// 
+    ///
     /// # Return value
-    /// 
+    ///
     /// Returns a Style struct for the color associated with the given xterm
     /// number so the color that can be applied to text.
     fn _colour(&self, col_256: u8) -> Style {
         Style::new().color256(col_256)
     }
 
-    /// Prints the already exists error message to stderr 
-    /// 
-    /// This function prints an error message to stderr for errors which have 
+    /// Prints the already exists error message to stderr
+    ///
+    /// This function prints an error message to stderr for errors which have
     /// an **AlreadyExists** error kind.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `err` - The borrowed `io::error`
     fn _already_exists_err_msg(&self, err: &io::Error) {
         eprintln!(
@@ -47,13 +47,13 @@ impl Create {
         panic!("{} exists\n{:?}", self.name.display(), err);
     }
 
-    /// Prints the not found error message to stderr 
-    /// 
-    /// This function prints an error message to stderr for errors which have 
+    /// Prints the not found error message to stderr
+    ///
+    /// This function prints an error message to stderr for errors which have
     /// a **NotFound** error kind.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `err` - The borrowed `io::error`
     fn _not_found_err_msg(&self, err: &io::Error) {
         eprintln!(
@@ -71,13 +71,13 @@ impl Create {
         panic!("Parents don't exist\n{:?}", err);
     }
 
-    /// Prints the permission denied error message to stderr 
-    /// 
-    /// This function prints an error message to stderr for errors which have 
+    /// Prints the permission denied error message to stderr
+    ///
+    /// This function prints an error message to stderr for errors which have
     /// an **PermissionDenied** error kind.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `err` - The borrowed `io::error`
     fn _permission_denied_err_msg(&self, err: &io::Error) {
         eprintln!(
@@ -93,13 +93,13 @@ impl Create {
         panic!("Invalid permissions\n{:?}", err);
     }
 
-    /// Prints the generic error message to stderr 
-    /// 
-    /// This function prints an error message to stderr for errors which have 
+    /// Prints the generic error message to stderr
+    ///
+    /// This function prints an error message to stderr for errors which have
     /// an error kind that isn't `AlreadyExists`, `NotFound` or `PermissionDenied`.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `err` - The borrowed `io::error`
     fn _generic_err_msg(&self, err: &io::Error) {
         eprintln!(
@@ -114,14 +114,14 @@ impl Create {
         panic!("{:?}", err);
     }
 
-    /// Handles the different errors that might be encountered 
-    /// 
+    /// Handles the different errors that might be encountered
+    ///
     /// This function matches on three different error kinds `AlreadyExists`,
     /// `NotFound` or `PermissionDenied`. If a different error kind is encountered
     /// a generic error message is printed.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `err` - The borrowed `io::error`
     fn _validate_create_result(&self, err: &io::Result<()>) {
         match err {
@@ -140,15 +140,15 @@ impl Create {
     }
 
     /// Creates the root directory of a new project
-    /// 
+    ///
     /// Creates a new folder from the name of a directory or a path to the desired
     /// location.
-    /// 
+    ///
     /// If a path is passed, the parents won't be created by default however if the
     /// `--parents` option is passed the parents will also be created.
-    /// 
+    ///
     /// # Errors
-    /// 
+    ///
     /// * The directory already exists
     /// * The parent(s) of the path don't exist
     /// * The user doesn't have permissions to create the directory
@@ -163,7 +163,7 @@ impl Create {
     } // fn create_root
 
     /// Creates the subdirectories that geoff manages
-    /// 
+    ///
     /// Creates the 4 directories that geoff manages
     /// * data_sources
     /// * explorations
@@ -180,7 +180,7 @@ impl Create {
     }
 
     /// Creates the initial files for the project
-    /// 
+    ///
     /// Creates 3 files
     /// * README.md - General introduction to the project
     /// * project_scoping.md - The project scoping template to be filled out at the start of each project
@@ -196,12 +196,12 @@ impl Create {
     }
 
     /// Creates a tree representation of the directories and files created
-    /// 
+    ///
     /// This function creates a tree to be printed showing the different folders and
     /// files created.
-    /// 
+    ///
     /// # Return value
-    /// 
+    ///
     /// Returns an instance of a StringItem from the ptree crate. This is a struct storing
     /// the data in the tree
     pub fn create_tree(&self) -> item::StringItem {

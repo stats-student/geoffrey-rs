@@ -92,7 +92,7 @@ fn errors_on_permission_denied() -> () {
                 fs::create_dir("read_only_test_dir").unwrap();
 
                 env::set_current_dir("read_only_test_dir").expect("Can't change to read only dir");
-        
+
                 process::Command::new("Get-Item")
                     .arg("-Path")
                     .arg(".")
@@ -104,14 +104,14 @@ fn errors_on_permission_denied() -> () {
                 fs::create_dir("read_only_test_dir").unwrap();
 
                 env::set_current_dir("read_only_test_dir").expect("Can't change to read only dir");
-                
+
                 process::Command::new("chmod")
                     .arg("444")
                     .arg(".")
                     .output()
                     .expect("Unable to change permissions");
             };
-        
+
             let mut cmd: process::Command = process::Command::cargo_bin("geoff").unwrap();
 
             cmd.arg("create").arg("test_project");
