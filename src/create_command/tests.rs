@@ -1,4 +1,4 @@
-use std::{env, fs, path};
+use std::{env, fs, path, process};
 use test_fixtures::test_in_tmp_dir;
 
 use super::*;
@@ -37,8 +37,6 @@ fn parents_dont_exist_error_raised() -> () {
 #[test]
 #[should_panic(expected = "Invalid permissions")]
 fn invalid_permissions_error_raised() -> () {
-    env::set_current_dir("/etc/").unwrap();
-
     let create: Create = Create {
         name: path::PathBuf::from("./test_project"),
         parents: false,
@@ -126,12 +124,34 @@ fn errors_on_parents_dont_exist() -> () {
 fn errors_on_permission_denied() -> () {
     test_in_tmp_dir(
         || {
-            env::set_current_dir("/etc/").unwrap();
+            if env::consts::OS == "windows" {
+                fs::create_dir("read_only_test_dir").unwrap();
 
+                env::set_current_dir("read_only_test_dir").expect("Can't change to read only dir");
+        
+                process::Command::new("Get-Item")
+                    .arg("-Path")
+                    .arg(".")
+                    .arg("|")
+                    .arg("$_.IsReadOnly = $true")
+                    .output()
+                    .expect("Unable to change permissions");
+            } else {
+                fs::create_dir("read_only_test_dir").unwrap();
+
+                env::set_current_dir("read_only_test_dir").expect("Can't change to read only dir");
+                
+                process::Command::new("chmod")
+                    .arg("444")
+                    .arg(".")
+                    .output()
+                    .expect("Unable to change permissions");
+            };
+        
             let create: Create = Create {
                 name: path::PathBuf::from("./test_project/"),
                 parents: false,
-            };
+            }; 
 
             create.create_root()
         },
