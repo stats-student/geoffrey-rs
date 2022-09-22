@@ -39,7 +39,7 @@ jobs:
       run: cargo test --all-features --no-run --locked
 
     - name: Run tests
-      run: cargo test --all-features
+      run: cargo test --all-features -- --test-threads=1
 
   rust-cross:
     name: Rust Cross

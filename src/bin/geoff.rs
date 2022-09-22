@@ -59,10 +59,10 @@ fn main() {
             println!("\u{1F680} {} created!\n", name_str);
             ptree::print_tree(&tree).unwrap();
         }
-        Some(Commands::BuildDocs { output:_ }) => {
+        Some(Commands::BuildDocs { output: _ }) => {
             println!("build docs matched");
         }
-        Some(Commands::Add { command:_ }) => {
+        Some(Commands::Add { command: _ }) => {
             println!("add matched");
         }
         None => {

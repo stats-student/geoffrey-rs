@@ -103,9 +103,8 @@ impl Create {
 
         for subdir in subdirs.iter() {
             let full_subdir = &format!("{}/{}/", self.name.display(), subdir);
-            fs::create_dir(full_subdir).unwrap_or_else(
-                |_| panic!("Unable to create {}", full_subdir)
-            );
+            fs::create_dir(full_subdir)
+                .unwrap_or_else(|_| panic!("Unable to create {}", full_subdir));
         }
     }
 
@@ -114,9 +113,8 @@ impl Create {
 
         for file in files.iter() {
             let full_file_path = &format!("{}/{}", self.name.display(), file);
-            fs::write(full_file_path, "").unwrap_or_else(
-                |_| panic!("Unable to create {}", full_file_path)
-            );
+            fs::write(full_file_path, "")
+                .unwrap_or_else(|_| panic!("Unable to create {}", full_file_path));
         }
     }
 
