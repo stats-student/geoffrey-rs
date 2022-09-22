@@ -16,7 +16,7 @@ use std::path::PathBuf;
 /// 
 /// * `test` - any type that implements the FnOnce trait and returns either
 ///            () or a panic::UnwindSafe
-pub fn test_in_tmp_dir<T>(test: T) -> ()
+pub fn test_in_tmp_dir<T>(test: T, should_panic: bool) -> ()
 where
     T: FnOnce() -> () + panic::UnwindSafe,
 {
@@ -32,7 +32,14 @@ where
     // Teardown
     teardown(&cwd, &tmp_dir);
 
-    assert!(result.is_ok())
+    if should_panic {
+        match result {
+            Ok(_) => assert!(result.is_ok()),
+            Err(err) => panic::resume_unwind(err)
+        }
+    } else {
+        assert!(result.is_ok())
+    }
 }
 
 /// Sets up the temporary directory
