@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Cutive&family=Cutive+Mono&family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+html {
+    font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cutive', serif;
+}
+
+code {
+    font-family: 'Cutive Mono', monospace !important;
+    font-weight: 600;
+}
+
+li.chapter-item.expanded.affix {
+    font-weight: 600;
+    font-family: 'Cutive', serif;
+    padding-left: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+li.chapter-item.expanded {
+    padding: 0px;
+    margin: 0px;
+    padding-left: 20px;
+    font-size: 14px;
+}

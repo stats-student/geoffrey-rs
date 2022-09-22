@@ -1,0 +1,415 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <script type="text/javascript" src=""></script>
+        
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Geoffrey documentation</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/my-css.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Getting started</a></li><li class="chapter-item expanded affix "><a href="geoff.html">geoff</a></li><li class="chapter-item expanded affix "><a href="commands/create.html">create</a></li><li class="chapter-item expanded affix "><a href="commands/add.html">add</a></li><li class="chapter-item expanded "><a href="commands/add/data_source.html">data_source</a></li><li class="chapter-item expanded "><a href="commands/add/exploration.html">exploration</a></li><li class="chapter-item expanded "><a href="commands/add/model.html">model</a></li><li class="chapter-item expanded "><a href="commands/add/product.html">product</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Geoffrey documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/stats-student/geoffrey" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p align="center">
+    <img src="static/images/geoffrey-logo.png" class="logo">
+</p>
+<p align="center">
+A simple tool to automate the creation of some folders and files for my
+data science projects
+</p>
+<h3 id="introduction"><a class="header" href="#introduction">Introduction</a></h3>
+Geoffrey is a tool to automate and standardise(ish) the admin in my data science projects by creating folders and common files to speed up project setup and ensure that every project has a similar layout.
+<br>
+My general workflow for a data science project consists of 4 steps:
+<ul style="list-style: none;">
+  <li style="margin-bottom: 10px;">
+    <img src="static/images/folder.png" height="25px" width="25px" style="vertical-align: middle; padding-right: 5px;">  Data sources 
+  </li>
+  <li style="margin-bottom: 10px;">
+    <img src="static/images/magnifying-glass.png" height="25px" width="25px" style="vertical-align: middle;padding-right: 5px;"> Exploration
+  </li>
+  <li style="margin-bottom: 10px;">
+    <img src="static/images/bar-chart.png" height="25px" width="25px" style="vertical-align: middle;padding-right: 5px;"> Models
+  </li>
+  <li>
+    <img src="static/images/gift-box.png" height="25px" width="25px" style="vertical-align: middle;padding-right: 5px;"> Products
+  </li>
+</ul>
+<p>Geoffrey allows you to create projects and add in each of these 4 components in a modular way.</p>
+<p>The quickstart is below and the manual for the different commands is <a href="docs/geoff.html">here</a></p>
+<h3 id="quickstart"><a class="header" href="#quickstart">Quickstart</a></h3>
+<h5 id="installation"><a class="header" href="#installation">Installation</a></h5>
+<pre><code class="language-shell">foo@bar:~$ python -m pip install git+https://github.com/danielyates2/geoffrey#v0.1.1
+Collecting git+https://github.com/danielyates2/geoffrey#v0.1.1
+  Cloning https://github.com/danielyates2/geoffrey to /tmp/pip-req-build-3gtmwyf2
+  Running command git clone -q https://github.com/danielyates2/geoffrey /tmp/pip-req-build-3gtmwyf2
+  Installing build dependencies ... done
+  ...
+Successfully built geoffrey
+</code></pre>
+<h5 id="create-a-project"><a class="header" href="#create-a-project">Create a project</a></h5>
+<pre><code class="language-shell">foo@bar:~$ geoff create test_project
+🚀 test_project created!
+
+test_project
+├── 🖿 data_sources
+├── 🖿 explorations
+├── 🖿 models
+├── 🖿 products
+├── 🗋 README.md
+└── 🗋 project_scoping.md
+</code></pre>
+<h5 id="add-a-data-source"><a class="header" href="#add-a-data-source">Add a data source</a></h5>
+<h5 id="add-an-exploration"><a class="header" href="#add-an-exploration">Add an exploration</a></h5>
+<h5 id="add-a-model"><a class="header" href="#add-a-model">Add a model</a></h5>
+<h5 id="add-a-product"><a class="header" href="#add-a-product">Add a product</a></h5>
+<div style="break-before: page; page-break-before: always;"></div><p align="center">
+    <img src="static/images/geoffrey-logo.png">
+</p>
+<h1 id="geoff"><a class="header" href="#geoff">geoff</a></h1>
+<p>Geoff will listen to your commands and carry out the relevant project admin.</p>
+<h2 id="commands"><a class="header" href="#commands">Commands</a></h2>
+<ul>
+<li><a href="commands/create.html">geoff create</a></li>
+<li><a href="commands/add.html">geoff add</a></li>
+</ul>
+<h2 id="options"><a class="header" href="#options">Options</a></h2>
+<p><code>--install-completion</code><br>
+Install completion for the current shell</p>
+<p><code>--show-completion</code><br>
+Show completion for the current shell, to copy it or customize the installation</p>
+<p><code>--help</code><br>
+Shows help message and exits</p>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<pre><code class="language-shell">foo@bar:~$ geoff create test_project
+foo@bar:~$ geoff add exploration some_exploration
+foo@bar:~$ geoff add data_source some_data_source
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><p align="center">
+    <img src="commands/../static/images/geoffrey-logo.png">
+</p>
+<h1 id="geoff-create"><a class="header" href="#geoff-create">geoff create</a></h1>
+<pre><code class="language-shell">geoff create [OPTIONS] NAME
+</code></pre>
+<p>Creates a new project called <code>NAME</code> and creates the 4 sub directories that geoff manages along with a README and project scoping template.</p>
+<h2 id="arguments"><a class="header" href="#arguments">Arguments</a></h2>
+<p><code>name</code>
+The name of the project. This can be a project name or a path with the final directory in the path being the project name.</p>
+<p>Project name</p>
+<pre><code class="language-shell">foo@bar:~$ geoff create test_project
+</code></pre>
+<p>Project with path</p>
+<pre><code class="language-shell">
+foo@bar:~$ geoff create path/to/test_project
+</code></pre>
+<p>If a path is supplied and the parents of the project name don't exist, the parents either need to be created manually or <code>--parents</code> needs to be supplied.</p>
+<h2 id="options-1"><a class="header" href="#options-1">Options</a></h2>
+<p><code>--parents</code> \ <code>--no-parents</code></p>
+<p>Default: <code>--no-parents</code></p>
+<p>Whether to create the parents of the supplied path or not.</p>
+<p><code>--help</code>
+Shows help message and exits</p>
+<h2 id="examples-1"><a class="header" href="#examples-1">Examples</a></h2>
+<p>Create a project</p>
+<pre><code class="language-shell">foo@bar:~$ geoff create test_project
+🚀 test_project created!
+
+test_project
+├── 🖿 data_sources
+├── 🖿 explorations
+├── 🖿 models
+├── 🖿 products
+├── 🗋 README.md
+└── 🗋 project_scoping.md
+</code></pre>
+<p>Create a project and parents of specified path</p>
+<pre><code class="language-shell">foo@bar:~$ geoff create --parents path/to/test_project
+🚀 test_project created!
+
+test_project
+├── 🖿 data_sources
+├── 🖿 explorations
+├── 🖿 models
+├── 🖿 products
+├── 🗋 README.md
+└── 🗋 project_scoping.md
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><p align="center">
+    <img src="commands/../static/images/geoffrey-logo.png">
+</p>
+<h1 id="geoff-add"><a class="header" href="#geoff-add">geoff add</a></h1>
+<p>The add subcommand adds an instance of the requested step (data source, exploration, model or product).</p>
+<h2 id="commands-1"><a class="header" href="#commands-1">Commands</a></h2>
+<ul>
+<li><a href="commands/add/data_source.html">geoff add data-source</a></li>
+<li><a href="commands/add/exploration.html">geoff add exploration</a></li>
+<li><a href="commands/add/model.html">geoff add model</a></li>
+<li><a href="commands/add/product.html">geoff add product</a></li>
+</ul>
+<h2 id="options-2"><a class="header" href="#options-2">Options</a></h2>
+<p><code>--install-completion</code><br>
+Install completion for the current shell</p>
+<p><code>--show-completion</code><br>
+Show completion for the current shell, to copy it or customize the installation</p>
+<p><code>--help</code><br>
+Shows help message and exits</p>
+<h2 id="examples-2"><a class="header" href="#examples-2">Examples</a></h2>
+<pre><code class="language-shell">foo@bar:~$ geoff add data_source some_data_source
+foo@bar:~$ geoff add exploration some_exploration
+foo@bar:~$ geoff add model some_model
+foo@bar:~$ geoff add product some_product
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><p align="center">
+    <img src="commands/add/../../static/images/geoffrey-logo.png">
+</p>
+<h1 id="geoff-add-data-source"><a class="header" href="#geoff-add-data-source">geoff add data-source</a></h1>
+<pre><code class="language-shell">geoff add data-source [OPTIONS] NAME
+</code></pre>
+<p>Adds a new folder in data_sources folder called <code>NAME</code> which contains a metadata markdown document to populate. The metadata file captures some details about the data source and any key people that were involved in the collection or authorisation to access the data.</p>
+<h2 id="data-sources"><a class="header" href="#data-sources">Data sources</a></h2>
+<p>There are three different metadata templates that are created depending on whether the data source is a </p>
+<p><img src="commands/add/../../static/images/db.png" height="25px" width="25px" style="vertical-align: middle;"> database source</p>
+<p><img src="commands/add/../../static/images/folder.png" height="25px" width="25px" style="vertical-align: middle;"> extract source</p>
+<img src="commands/add/../../static/images/cloud-download.png" height="25px" width="25px" style="vertical-align: middle;"> 
+web download source
+<h3 id="database-source"><a class="header" href="#database-source">Database source</a></h3>
+<p>A database source is used when you have access to the database that holds the data you're extracting. You may still export that data to some other file type or connect to the database directly.</p>
+<h3 id="extract-source"><a class="header" href="#extract-source">Extract source</a></h3>
+<p>An extract source is used when you are reliant on someone else in the business getting some data, potentially cleaning/transforming the data and sending it to you.</p>
+<h3 id="web-download-source"><a class="header" href="#web-download-source">Web download source</a></h3>
+<p>A web download source is used when you have downloaded some data from a public website e.g kaggle, government websites</p>
+<h2 id="arguments-1"><a class="header" href="#arguments-1">Arguments</a></h2>
+<p><code>name</code>
+The name of the data sources</p>
+<p>Data source name</p>
+<pre><code class="language-shell">foo@bar:~$ geoff add data-source iris
+</code></pre>
+<p>If no options are passed a directory is created with an empty metadata.md</p>
+<h2 id="options-3"><a class="header" href="#options-3">Options</a></h2>
+<p><code>--database\-d</code>
+Creates a folder for a database data source </p>
+<p><code>--extract\-e</code>
+Creates a folder for an extract data source </p>
+<p><code>--web-download\-w</code>
+Creates a folder for a web download data source </p>
+<p><code>--help</code>
+Shows help message and exits</p>
+<h2 id="examples-3"><a class="header" href="#examples-3">Examples</a></h2>
+<p>Add a data source with no options</p>
+<pre><code class="language-shell">foo@bar:~$ geoff add data-source iris
+🎯 iris data source added!
+
+🖿 data_sources
+└── 🖿 iris
+    └── 🗋 metadata.md
+</code></pre>
+<p>Add a database data source</p>
+<pre><code class="language-shell">foo@bar:~$ geoff add data-source --database iris
+🎯 iris data source added!
+
+🖿 data_sources
+└── 🖿 iris
+    └── 🗋 metadata.md
+</code></pre>
+<p>Add a extract data source</p>
+<pre><code class="language-shell">foo@bar:~$ geoff add data-source --extract iris
+🎯 iris data source added!
+
+🖿 data_sources
+└── 🖿 iris
+    └── 🗋 metadata.md
+</code></pre>
+<p>Add a web download data source</p>
+<pre><code class="language-shell">foo@bar:~$ geoff add data-source --web-download iris
+🎯 iris data source added!
+
+🖿 data_sources
+└── 🖿 iris
+    └── 🗋 metadata.md
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="exploration"><a class="header" href="#exploration">Exploration</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="model"><a class="header" href="#model">Model</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="product"><a class="header" href="#product">Product</a></h1>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript" src="theme/my-js.js"></script>
+
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </body>
+</html>

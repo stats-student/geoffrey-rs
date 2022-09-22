@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <script type="text/javascript" src=""></script>
+        
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>data_source - Geoffrey documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/my-css.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Getting started</a></li><li class="chapter-item expanded affix "><a href="../../geoff.html">geoff</a></li><li class="chapter-item expanded affix "><a href="../../commands/create.html">create</a></li><li class="chapter-item expanded affix "><a href="../../commands/add.html">add</a></li><li class="chapter-item expanded "><a href="../../commands/add/data_source.html" class="active">data_source</a></li><li class="chapter-item expanded "><a href="../../commands/add/exploration.html">exploration</a></li><li class="chapter-item expanded "><a href="../../commands/add/model.html">model</a></li><li class="chapter-item expanded "><a href="../../commands/add/product.html">product</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Geoffrey documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/stats-student/geoffrey" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p align="center">
+    <img src="../../static/images/geoffrey-logo.png">
+</p>
+<h1 id="geoff-add-data-source"><a class="header" href="#geoff-add-data-source">geoff add data-source</a></h1>
+<pre><code class="language-shell">geoff add data-source [OPTIONS] NAME
+</code></pre>
+<p>Adds a new folder in data_sources folder called <code>NAME</code> which contains a metadata markdown document to populate. The metadata file captures some details about the data source and any key people that were involved in the collection or authorisation to access the data.</p>
+<h2 id="data-sources"><a class="header" href="#data-sources">Data sources</a></h2>
+<p>There are three different metadata templates that are created depending on whether the data source is a </p>
+<p><img src="../../static/images/db.png" height="25px" width="25px" style="vertical-align: middle;"> database source</p>
+<p><img src="../../static/images/folder.png" height="25px" width="25px" style="vertical-align: middle;"> extract source</p>
+<img src="../../static/images/cloud-download.png" height="25px" width="25px" style="vertical-align: middle;"> 
+web download source
+<h3 id="database-source"><a class="header" href="#database-source">Database source</a></h3>
+<p>A database source is used when you have access to the database that holds the data you're extracting. You may still export that data to some other file type or connect to the database directly.</p>
+<h3 id="extract-source"><a class="header" href="#extract-source">Extract source</a></h3>
+<p>An extract source is used when you are reliant on someone else in the business getting some data, potentially cleaning/transforming the data and sending it to you.</p>
+<h3 id="web-download-source"><a class="header" href="#web-download-source">Web download source</a></h3>
+<p>A web download source is used when you have downloaded some data from a public website e.g kaggle, government websites</p>
+<h2 id="arguments"><a class="header" href="#arguments">Arguments</a></h2>
+<p><code>name</code>
+The name of the data sources</p>
+<p>Data source name</p>
+<pre><code class="language-shell">foo@bar:~$ geoff add data-source iris
+</code></pre>
+<p>If no options are passed a directory is created with an empty metadata.md</p>
+<h2 id="options"><a class="header" href="#options">Options</a></h2>
+<p><code>--database\-d</code>
+Creates a folder for a database data source </p>
+<p><code>--extract\-e</code>
+Creates a folder for an extract data source </p>
+<p><code>--web-download\-w</code>
+Creates a folder for a web download data source </p>
+<p><code>--help</code>
+Shows help message and exits</p>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<p>Add a data source with no options</p>
+<pre><code class="language-shell">foo@bar:~$ geoff add data-source iris
+🎯 iris data source added!
+
+🖿 data_sources
+└── 🖿 iris
+    └── 🗋 metadata.md
+</code></pre>
+<p>Add a database data source</p>
+<pre><code class="language-shell">foo@bar:~$ geoff add data-source --database iris
+🎯 iris data source added!
+
+🖿 data_sources
+└── 🖿 iris
+    └── 🗋 metadata.md
+</code></pre>
+<p>Add a extract data source</p>
+<pre><code class="language-shell">foo@bar:~$ geoff add data-source --extract iris
+🎯 iris data source added!
+
+🖿 data_sources
+└── 🖿 iris
+    └── 🗋 metadata.md
+</code></pre>
+<p>Add a web download data source</p>
+<pre><code class="language-shell">foo@bar:~$ geoff add data-source --web-download iris
+🎯 iris data source added!
+
+🖿 data_sources
+└── 🖿 iris
+    └── 🗋 metadata.md
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../commands/add.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../commands/add/exploration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../commands/add.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../commands/add/exploration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript" src="../../theme/my-js.js"></script>
+
+
+    </body>
+</html>
