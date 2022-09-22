@@ -133,7 +133,7 @@ fn errors_on_permission_denied() -> () {
                     .output()
                     .unwrap();
 
-                env::set_current_dir("read_only_test_dir").expect("Can't change to read only dir");
+                env::set_current_dir("C:\\read_only_test_dir").expect("Can't change to read only dir");
             } else {
                 env::set_current_dir("/etc/").expect("Can't change to read only dir");
             };
