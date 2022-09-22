@@ -95,14 +95,14 @@ fn errors_on_permission_denied() -> () {
             } else {
                 // FIXME: Shouldn't be reliant on a system created folder
                 env::set_current_dir("/etc/").expect("Can't change to read only dir");
+
+                let mut cmd: process::Command = process::Command::cargo_bin("geoff").unwrap();
+
+                cmd.arg("create").arg("test_project");
+                cmd.assert()
+                    .failure()
+                    .stderr(predicate::str::contains("Invalid permissions"));
             };
-
-            let mut cmd: process::Command = process::Command::cargo_bin("geoff").unwrap();
-
-            cmd.arg("create").arg("test_project");
-            cmd.assert()
-                .failure()
-                .stderr(predicate::str::contains("Invalid permissions"));
         },
         false,
     )
