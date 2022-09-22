@@ -125,7 +125,7 @@ fn errors_on_permission_denied() -> () {
     test_in_tmp_dir(
         || {
             if env::consts::OS == "windows" {
-                env::set_current_dir("C:\\Program \\ Files").expect("Can't change to read only dir");
+                env::set_current_dir("C:\\'Program Files'").expect("Can't change to read only dir");
             } else {
                 env::set_current_dir("/etc/").expect("Can't change to read only dir");
             };
