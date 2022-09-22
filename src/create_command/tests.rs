@@ -127,13 +127,13 @@ fn errors_on_permission_denied() -> () {
             if env::consts::OS == "windows" {
                 fs::create_dir("read_only_test_dir").unwrap();
 
-                std::process::Command::new("Set-ItemProperty")
+                std::process::Command::new("Get-Item")
                     .arg("-Path")
                     .arg("read_only_test_dir")
-                    .arg("-Name")
-                    .arg("IsReadOnly")
-                    .arg("-Value")
-                    .arg("$True")
+                    .arg("|")
+                    .arg("$_.Attributes")
+                    .arg("+=")
+                    .arg("'ReadOnly'")
                     .output()
                     .unwrap();
 
@@ -141,7 +141,7 @@ fn errors_on_permission_denied() -> () {
             } else {
                 env::set_current_dir("/etc/").expect("Can't change to read only dir");
             };
-
+            
             let create: Create = Create {
                 name: path::PathBuf::from("./test_project/"),
                 parents: false,
