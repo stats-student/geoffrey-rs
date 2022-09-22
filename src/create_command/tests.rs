@@ -131,8 +131,9 @@ fn errors_on_permission_denied() -> () {
 
                 process::Command::new("icacls")
                     .arg(".")
-                    .arg("/GRANT")
-                    .arg("*S-1-1-0:F")
+                    .arg("/inheritance:r")
+                    .arg("/grant:r")
+                    .arg("Everyone:R")
                     .output()
                     .expect("Unable to change permissions");
             } else {
