@@ -91,8 +91,7 @@ fn errors_on_permission_denied() -> () {
             if env::consts::OS == "windows" {
                 // FIXME: Unable to create a directory in windows that causes a
                 //        permissions error
-                assert!(true)
-
+                panic!("Invalid permissions");
             } else {
                 // FIXME: Shouldn't be reliant on a system created folder
                 env::set_current_dir("/etc/").expect("Can't change to read only dir");
