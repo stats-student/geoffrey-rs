@@ -1,6 +1,5 @@
 use clap::{AppSettings, Parser, Subcommand};
-use std::fs::create_dir;
-use std::path::{PathBuf};
+use std::path;
 
 use geoffrey::create_command::Create;
 
@@ -20,7 +19,7 @@ enum Commands {
     BuildDocs {
         /// The location for the documentation website
         #[clap(short, long, default_value = "./docs/", value_parser)]
-        output: PathBuf,
+        output: path::PathBuf,
     },
     /// Adds a new instance of a data source, exploration, model or product
     Add {
@@ -44,21 +43,26 @@ fn main() {
     let cli = Geoffrey::parse();
 
     match &cli.command {
-        Some(Commands::Create(Create)) => {
-            create_dir(&Create.name).expect("Project folder couldn't be created");
+        Some(Commands::Create(create)) => {
+            create.create_root();
+            create.create_subdirectories();
+            create.create_files();
+            let tree = create.create_tree();
 
-            let name_str = Create.name
+            let name_str = create
+                .name
                 .file_name()
                 .unwrap()
                 .to_str()
                 .expect("name isn't a valid unicode string");
 
-            println!("\u{1F680} {} created!", name_str);
+            println!("\u{1F680} {} created!\n", name_str);
+            ptree::print_tree(&tree).unwrap();
         }
-        Some(Commands::BuildDocs { output }) => {
+        Some(Commands::BuildDocs { output:_ }) => {
             println!("build docs matched");
         }
-        Some(Commands::Add { command }) => {
+        Some(Commands::Add { command:_ }) => {
             println!("add matched");
         }
         None => {
