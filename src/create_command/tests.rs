@@ -130,15 +130,8 @@ fn errors_on_permission_denied() -> () {
                 assert!(true)
 
             } else {
-                fs::create_dir("read_only_test_dir").unwrap();
-
-                std::process::Command::new("chmod")
-                    .arg("444")
-                    .arg("read_only_test_dir")
-                    .output()
-                    .unwrap();
-
-                env::set_current_dir("read_only_test_dir").expect("Can't change to read only dir");
+                // FIXME: Shouldn't be reliant on a system created folder
+                env::set_current_dir("/etc/").expect("Can't change to read only dir");
             };
             
             let create: Create = Create {
