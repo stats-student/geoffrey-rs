@@ -91,13 +91,9 @@ fn errors_on_permission_denied() -> () {
             if env::consts::OS == "windows" {
                 fs::create_dir("read_only_test_dir").unwrap();
 
-                std::process::Command::new("Set-ItemProperty")
-                    .arg("-Path")
+                std::process::Command::new("attrib")
+                    .arg("+r")
                     .arg("read_only_test_dir")
-                    .arg("-Name")
-                    .arg("IsReadOnly")
-                    .arg("-Value")
-                    .arg("$True")
                     .output()
                     .unwrap();
 
