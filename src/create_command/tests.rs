@@ -1,4 +1,4 @@
-use std::{env, fs, path, process};
+use std::{env, fs, path};
 use test_fixtures::test_in_tmp_dir;
 
 use super::*;

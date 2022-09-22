@@ -89,27 +89,9 @@ fn errors_on_permission_denied() -> () {
     test_in_tmp_dir(
         || {
             if env::consts::OS == "windows" {
-                fs::create_dir("read_only_test_dir").unwrap();
-
-                env::set_current_dir("read_only_test_dir").expect("Can't change to read only dir");
-
-                process::Command::new("Get-Item")
-                    .arg("-Path")
-                    .arg(".")
-                    .arg("|")
-                    .arg("$_.IsReadOnly = $true")
-                    .output()
-                    .expect("Unable to change permissions");
+                env::set_current_dir("C:\\").expect("Can't change to read only dir");
             } else {
-                fs::create_dir("read_only_test_dir").unwrap();
-
-                env::set_current_dir("read_only_test_dir").expect("Can't change to read only dir");
-
-                process::Command::new("chmod")
-                    .arg("444")
-                    .arg(".")
-                    .output()
-                    .expect("Unable to change permissions");
+                env::set_current_dir("/etc/").expect("Can't change to read only dir");
             };
 
             let mut cmd: process::Command = process::Command::cargo_bin("geoff").unwrap();
