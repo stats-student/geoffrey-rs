@@ -125,7 +125,19 @@ fn errors_on_permission_denied() -> () {
     test_in_tmp_dir(
         || {
             if env::consts::OS == "windows" {
-                env::set_current_dir("C:\\Windows").expect("Can't change to read only dir");
+                fs::create_dir("read_only_test_dir").unwrap();
+
+                std::process::Command::new("Set-ItemProperty")
+                    .arg("-Path")
+                    .arg("read_only_test_dir")
+                    .arg("-Name")
+                    .arg("IsReadOnly")
+                    .arg("-Value")
+                    .arg("$True")
+                    .output()
+                    .unwrap();
+
+                env::set_current_dir("read_only_test_dir").expect("Can't change to read only dir");
             } else {
                 env::set_current_dir("/etc/").expect("Can't change to read only dir");
             };
