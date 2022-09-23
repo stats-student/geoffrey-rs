@@ -1,0 +1,52 @@
+name: CD
+
+on:
+  push:
+    tags:
+    - "v*"
+
+jobs:
+  tagged-release:
+    name: "Tagged release"
+    runs-on: "ubuntu-latest"
+
+    env:
+      targets: "aarch64-unknown-linux-gnu x86_64-apple-darwin x86_64-pc-windows-gnu x86_64-pc-windows-msvc x86_64-unknown-linux-gnu"
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Install Rust toolchain
+      run: |
+        rustup update --no-self-update stable
+
+        rustup target add ${{ env.targets }}
+
+    - name: Cache Dependencies
+      uses: Swatinem/rust-cache@v2
+
+    - name: Build binaries
+      run: |
+        for target in ${{ env.targets }}; do
+          cargo build --target=$target --release
+        done
+    
+    - name: Move binaries
+      run: |
+        for target in ${{ env.targets }}; do
+          mkdir $target &&
+          cp target/$target/release/geoff $target &&
+          cp README.md $target &&
+          tar -czvf $target.tar.gz $target
+    
+    - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            aarch64-unknown-linux-gnu.tar.gz
+            x86_64-apple-darwin.tar.gz
+            x86_64-pc-windows-gnu.tar.gz
+            x86_64-pc-windows-msvc.tar.gz
+            x86_64-unknown-linux-gnu.tar.gz
