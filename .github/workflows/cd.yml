@@ -78,6 +78,6 @@ jobs:
       uses: softprops/action-gh-release@v1
       with: 
         files: |
-          macos-binary.tar.gz
-          linux-binary.tar.gz
-          windows-binary.tar.gz
+          macos-latest-binary.tar.gz
+          linux-latest-binary.tar.gz
+          windows-latest-binary.tar.gz
