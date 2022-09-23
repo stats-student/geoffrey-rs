@@ -40,14 +40,14 @@ jobs:
           cp README.md $target &&
           tar -czvf $target.tar.gz $target
         done
-    
+
     - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          files: |
-            aarch64-unknown-linux-gnu.tar.gz
-            x86_64-apple-darwin.tar.gz
-            x86_64-pc-windows-gnu.tar.gz
-            x86_64-pc-windows-msvc.tar.gz
-            x86_64-unknown-linux-gnu.tar.gz
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        files: |
+          aarch64-unknown-linux-gnu.tar.gz
+          x86_64-apple-darwin.tar.gz
+          x86_64-pc-windows-gnu.tar.gz
+          x86_64-pc-windows-msvc.tar.gz
+          x86_64-unknown-linux-gnu.tar.gz
