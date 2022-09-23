@@ -42,7 +42,7 @@ jobs:
     - name: Move binaries
       run: |
           mkdir ${{ matrix.target }} &&
-          ls -l &&
+          ls -l . &&
           ls -l target &&
           ls -l target/${{ matrix.target }} &&
           ls -l target/${{ matrix.target }}/release &&
