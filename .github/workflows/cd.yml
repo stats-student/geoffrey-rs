@@ -40,20 +40,20 @@ jobs:
       run: cargo build --target=${{ matrix.target }} --release
     
     - name: Move binaries (linux, mac)
-      if: matrix.os != "windows-latest"
       run: |
           mkdir ${{ matrix.target }} &&
           cp target/${{ matrix.target }}/release/geoff ${{ matrix.target }} &&
           cp README.md ${{ matrix.target }} &&
           tar -czvf ${{ matrix.target }}.tar.gz ${{ matrix.target }}
+      if: startsWith(matrix.os, 'macos-') || startsWith(matrix.os, 'ubuntu-')
     
     - name: Move binaries (windows)
-      if: matrix.os == "windows-latest"
       run: |
           mkdir ${{ matrix.target }} &&
           cp target/${{ matrix.target }}/release/geoff.exe ${{ matrix.target }} &&
           cp README.md ${{ matrix.target }} &&
           tar -czvf ${{ matrix.target }}.tar.gz ${{ matrix.target }}
+      if: startsWith(matrix.os, 'windows-')
       
     - name: Archive zip
       uses: actions/upload-artifact@v3
