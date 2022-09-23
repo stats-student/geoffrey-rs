@@ -78,6 +78,6 @@ jobs:
       uses: softprops/action-gh-release@v1
       with: 
         files: |
-          x86_64-apple-darwin.tar.gz
-          x86_64-unknown-linux-gnu.tar.gz
-          x86_64-pc-windows-gnu.tar.gz
+          macos-latest-binary/x86_64-apple-darwin.tar.gz
+          ubuntu-latest-binary/x86_64-unknown-linux-gnu.tar.gz
+          windows-latest-binary/x86_64-pc-windows-gnu.tar.gz

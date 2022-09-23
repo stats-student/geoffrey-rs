@@ -9,6 +9,7 @@ data science projects
 
 <p align="center">
     <img src="https://github.com/stats-student/geoffrey-rs/actions/workflows/ci.yml/badge.svg" alt="ci">
+    <img src="https://github.com/stats-student/geoffrey-rs/actions/workflows/cd.yml/badge.svg" alt="cd">
     <img src="https://github.com/stats-student/geoffrey-rs/actions/workflows/docs.yml/badge.svg" alt="ci">
 </p>
 
