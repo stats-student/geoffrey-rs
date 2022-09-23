@@ -11,7 +11,7 @@ jobs:
     runs-on: "ubuntu-latest"
 
     env:
-      targets: "aarch64-unknown-linux-gnu x86_64-apple-darwin x86_64-pc-windows-gnu x86_64-pc-windows-msvc x86_64-unknown-linux-gnu"
+      targets: "x86_64-apple-darwin x86_64-pc-windows-gnu x86_64-unknown-linux-gnu"
 
     steps:
     - name: Checkout repository
@@ -46,8 +46,6 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         prerelease: false
         files: |
-          aarch64-unknown-linux-gnu.tar.gz
           x86_64-apple-darwin.tar.gz
           x86_64-pc-windows-gnu.tar.gz
-          x86_64-pc-windows-msvc.tar.gz
           x86_64-unknown-linux-gnu.tar.gz
