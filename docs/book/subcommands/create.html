@@ -5,7 +5,7 @@
         
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>add - Geoffrey documentation</title>
+        <title>create - Geoffrey documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Getting started</a></li><li class="chapter-item expanded affix "><a href="../geoff.html">geoff</a></li><li class="chapter-item expanded affix "><a href="../commands/create.html">create</a></li><li class="chapter-item expanded affix "><a href="../commands/add.html" class="active">add</a></li><li class="chapter-item expanded "><a href="../commands/add/data_source.html">data_source</a></li><li class="chapter-item expanded "><a href="../commands/add/exploration.html">exploration</a></li><li class="chapter-item expanded "><a href="../commands/add/model.html">model</a></li><li class="chapter-item expanded "><a href="../commands/add/product.html">product</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Getting started</a></li><li class="chapter-item expanded affix "><a href="../geoff.html">geoff</a></li><li class="chapter-item expanded affix "><a href="../subcommands/create.html" class="active">create</a></li><li class="chapter-item expanded affix "><a href="../subcommands/add.html">add</a></li><li class="chapter-item expanded "><a href="../subcommands/add/data_source.html">data_source</a></li><li class="chapter-item expanded "><a href="../subcommands/add/exploration.html">exploration</a></li><li class="chapter-item expanded "><a href="../subcommands/add/model.html">model</a></li><li class="chapter-item expanded "><a href="../subcommands/add/product.html">product</a></li><li class="chapter-item expanded affix "><a href="../attribution.html">Image attribution</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,40 +148,63 @@
                 <div id="content" class="content">
                     <main>
                         <p align="center">
-    <img src="../static/images/geoffrey-logo.png">
+    <img src="../static/images/geoffrey-logo.png" class="logo">
 </p>
-<h1 id="geoff-add"><a class="header" href="#geoff-add">geoff add</a></h1>
-<p>The add subcommand adds an instance of the requested step (data source, exploration, model or product).</p>
-<h2 id="commands"><a class="header" href="#commands">Commands</a></h2>
-<ul>
-<li><a href="add/data_source.html">geoff add data-source</a></li>
-<li><a href="add/exploration.html">geoff add exploration</a></li>
-<li><a href="add/model.html">geoff add model</a></li>
-<li><a href="add/product.html">geoff add product</a></li>
-</ul>
+<h1 id="geoff-create"><a class="header" href="#geoff-create">geoff create</a></h1>
+<pre><code class="language-shell">geoff create [OPTIONS] NAME
+</code></pre>
+<p>Creates a new project called <code>NAME</code> and creates the 4 sub directories that geoff manages along with a README and project scoping template.</p>
+<h2 id="arguments"><a class="header" href="#arguments">Arguments</a></h2>
+<p><code>name</code>
+The name of the project. This can be a project name or a path with the final directory in the path being the project name.</p>
+<p>Project name</p>
+<pre><code class="language-shell">foo@bar:~$ geoff create test_project
+</code></pre>
+<p>Project with path</p>
+<pre><code class="language-shell">
+foo@bar:~$ geoff create path/to/test_project
+</code></pre>
+<p>If a path is supplied and the parents of the project name don't exist, the parents either need to be created manually or <code>--parents</code> needs to be supplied.</p>
 <h2 id="options"><a class="header" href="#options">Options</a></h2>
-<p><code>--install-completion</code><br>
-Install completion for the current shell</p>
-<p><code>--show-completion</code><br>
-Show completion for the current shell, to copy it or customize the installation</p>
-<p><code>--help</code><br>
-Shows help message and exits</p>
+<p><code>-p, --parents</code></p>
+<p>Whether to create the parent directories in the project name</p>
+<p><code>--help</code></p>
+<p>Prints help information</p>
 <h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
-<pre><code class="language-shell">foo@bar:~$ geoff add data_source some_data_source
-foo@bar:~$ geoff add exploration some_exploration
-foo@bar:~$ geoff add model some_model
-foo@bar:~$ geoff add product some_product
+<p>Create a project</p>
+<pre><code class="language-shell">foo@bar:~$ geoff create test_project
+🚀 test_project created!
+
+test_project
+├── 🖿 data_sources
+├── 🖿 explorations
+├── 🖿 models
+├── 🖿 products
+├── 🗋 README.md
+└── 🗋 project_scoping.md
+</code></pre>
+<p>Create a project and parents of specified path</p>
+<pre><code class="language-shell">foo@bar:~$ geoff create --parents path/to/test_project
+🚀 test_project created!
+
+test_project
+├── 🖿 data_sources
+├── 🖿 explorations
+├── 🖿 models
+├── 🖿 products
+├── 🗋 README.md
+└── 🗋 project_scoping.md
 </code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../commands/create.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../geoff.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../commands/add/data_source.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../subcommands/add.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -191,17 +214,33 @@ foo@bar:~$ geoff add product some_product
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../commands/create.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../geoff.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../commands/add/data_source.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../subcommands/add.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

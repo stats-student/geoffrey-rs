@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="static/images/geoffrey-logo.png" class="logo">
+</p>
+
 <img src="static/images/db.png" height="40px" width="40px" style="vertical-align: middle;"></img>
 <a href="https://www.flaticon.com/free-icons/database" title="database icons">Database icons created by juicy_fish - Flaticon</a>
   
@@ -8,10 +12,6 @@
   
 <img src="static/images/cloud-download.png" height="40px" width="40px" style="vertical-align: middle;"></img>
 <a href="https://www.flaticon.com/free-icons/direct-download" title="direct download icons">Direct download icons created by juicy_fish - Flaticon</a>
-  
-  
-<img src="static/images/exploration.png" height="40px" width="40px" style="vertical-align: middle;"></img>
-<a href="https://www.flaticon.com/free-icons/analysis" title="analysis icons">Analysis icons created by juicy_fish - Flaticon</a>
   
   
 <img src="static/images/magnifying-glass.png" height="40px" width="40px" style="vertical-align: middle;"></img> 

@@ -2,10 +2,11 @@
 
 [Getting started](./index.md)
 [geoff](./geoff.md)
-[create](./commands/create.md)
-[add](./commands/add.md)
-- [data_source](./commands/add/data_source.md)
-- [exploration](./commands/add/exploration.md)
-- [model](./commands/add/model.md)
-- [product](./commands/add/product.md)
-[image attribution](./attribution.md)
+[create](./subcommands/create.md)
+[add](./subcommands/add.md)
+- [data_source](./subcommands/add/data_source.md)
+- [exploration](./subcommands/add/exploration.md)
+- [model](./subcommands/add/model.md)
+- [product](./subcommands/add/product.md)
+
+[Image attribution](./attribution.md)

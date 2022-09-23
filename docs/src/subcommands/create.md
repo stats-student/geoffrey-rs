@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="../static/images/geoffrey-logo.png">
+    <img src="../static/images/geoffrey-logo.png" class="logo">
 </p>
 
 # geoff create
@@ -28,19 +28,17 @@ Project with path
 foo@bar:~$ geoff create path/to/test_project
 ```
 
-
 If a path is supplied and the parents of the project name don't exist, the parents either need to be created manually or `--parents` needs to be supplied.
 
 ## Options
 
-`--parents` \ `--no-parents`
+`-p, --parents`
 
-Default: `--no-parents`
-
-Whether to create the parents of the supplied path or not.
+Whether to create the parent directories in the project name
 
 `--help`
-Shows help message and exits
+
+Prints help information
 
 ## Examples
 

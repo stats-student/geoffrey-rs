@@ -5,7 +5,7 @@
         
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>create - Geoffrey documentation</title>
+        <title>product - Geoffrey documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -15,29 +15,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../highlight.css">
-        <link rel="stylesheet" href="../tomorrow-night.css">
-        <link rel="stylesheet" href="../ayu-highlight.css">
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/my-css.css">
+        <link rel="stylesheet" href="../../theme/my-css.css">
 
     </head>
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "../";
+            var path_to_root = "../../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Getting started</a></li><li class="chapter-item expanded affix "><a href="../geoff.html">geoff</a></li><li class="chapter-item expanded affix "><a href="../commands/create.html" class="active">create</a></li><li class="chapter-item expanded affix "><a href="../commands/add.html">add</a></li><li class="chapter-item expanded "><a href="../commands/add/data_source.html">data_source</a></li><li class="chapter-item expanded "><a href="../commands/add/exploration.html">exploration</a></li><li class="chapter-item expanded "><a href="../commands/add/model.html">model</a></li><li class="chapter-item expanded "><a href="../commands/add/product.html">product</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Getting started</a></li><li class="chapter-item expanded affix "><a href="../../geoff.html">geoff</a></li><li class="chapter-item expanded affix "><a href="../../subcommands/create.html">create</a></li><li class="chapter-item expanded affix "><a href="../../subcommands/add.html">add</a></li><li class="chapter-item expanded "><a href="../../subcommands/add/data_source.html">data_source</a></li><li class="chapter-item expanded "><a href="../../subcommands/add/exploration.html">exploration</a></li><li class="chapter-item expanded "><a href="../../subcommands/add/model.html">model</a></li><li class="chapter-item expanded "><a href="../../subcommands/add/product.html" class="active">product</a></li><li class="chapter-item expanded affix "><a href="../../attribution.html">Image attribution</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -115,7 +115,7 @@
                     <h1 class="menu-title">Geoffrey documentation</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/stats-student/geoffrey" title="Git repository" aria-label="Git repository">
@@ -148,64 +148,19 @@
                 <div id="content" class="content">
                     <main>
                         <p align="center">
-    <img src="../static/images/geoffrey-logo.png">
+    <img src="../static/images/geoffrey-logo.png" class="logo">
 </p>
-<h1 id="geoff-create"><a class="header" href="#geoff-create">geoff create</a></h1>
-<pre><code class="language-shell">geoff create [OPTIONS] NAME
-</code></pre>
-<p>Creates a new project called <code>NAME</code> and creates the 4 sub directories that geoff manages along with a README and project scoping template.</p>
-<h2 id="arguments"><a class="header" href="#arguments">Arguments</a></h2>
-<p><code>name</code>
-The name of the project. This can be a project name or a path with the final directory in the path being the project name.</p>
-<p>Project name</p>
-<pre><code class="language-shell">foo@bar:~$ geoff create test_project
-</code></pre>
-<p>Project with path</p>
-<pre><code class="language-shell">
-foo@bar:~$ geoff create path/to/test_project
-</code></pre>
-<p>If a path is supplied and the parents of the project name don't exist, the parents either need to be created manually or <code>--parents</code> needs to be supplied.</p>
-<h2 id="options"><a class="header" href="#options">Options</a></h2>
-<p><code>--parents</code> \ <code>--no-parents</code></p>
-<p>Default: <code>--no-parents</code></p>
-<p>Whether to create the parents of the supplied path or not.</p>
-<p><code>--help</code>
-Shows help message and exits</p>
-<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
-<p>Create a project</p>
-<pre><code class="language-shell">foo@bar:~$ geoff create test_project
-🚀 test_project created!
-
-test_project
-├── 🖿 data_sources
-├── 🖿 explorations
-├── 🖿 models
-├── 🖿 products
-├── 🗋 README.md
-└── 🗋 project_scoping.md
-</code></pre>
-<p>Create a project and parents of specified path</p>
-<pre><code class="language-shell">foo@bar:~$ geoff create --parents path/to/test_project
-🚀 test_project created!
-
-test_project
-├── 🖿 data_sources
-├── 🖿 explorations
-├── 🖿 models
-├── 🖿 products
-├── 🗋 README.md
-└── 🗋 project_scoping.md
-</code></pre>
+<h1 id="product"><a class="header" href="#product">Product</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../geoff.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../subcommands/add/model.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../commands/add.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../attribution.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -215,17 +170,33 @@ test_project
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../geoff.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../subcommands/add/model.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../commands/add.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../../attribution.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
@@ -234,16 +205,16 @@ test_project
         </script>
 
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="../theme/my-js.js"></script>
+        <script type="text/javascript" src="../../theme/my-js.js"></script>
 
 
     </body>

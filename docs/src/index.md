@@ -29,7 +29,7 @@ My general workflow for a data science project consists of 4 steps:
 
 Geoffrey allows you to create projects and add in each of these 4 components in a modular way.
 
-The quickstart is below and the manual for the different commands is <a href="docs/geoff.md">here</a>
+The quickstart is below and the manual for the different commands is <a href="docs/src/geoff.md">here</a>
 
 <h3>Quickstart</h3>
 <h5>Installation</h5>

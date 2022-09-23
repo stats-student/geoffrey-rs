@@ -5,7 +5,7 @@
         
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>model - Geoffrey documentation</title>
+        <title>exploration - Geoffrey documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Getting started</a></li><li class="chapter-item expanded affix "><a href="../../geoff.html">geoff</a></li><li class="chapter-item expanded affix "><a href="../../commands/create.html">create</a></li><li class="chapter-item expanded affix "><a href="../../commands/add.html">add</a></li><li class="chapter-item expanded "><a href="../../commands/add/data_source.html">data_source</a></li><li class="chapter-item expanded "><a href="../../commands/add/exploration.html">exploration</a></li><li class="chapter-item expanded "><a href="../../commands/add/model.html" class="active">model</a></li><li class="chapter-item expanded "><a href="../../commands/add/product.html">product</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Getting started</a></li><li class="chapter-item expanded affix "><a href="../../geoff.html">geoff</a></li><li class="chapter-item expanded affix "><a href="../../subcommands/create.html">create</a></li><li class="chapter-item expanded affix "><a href="../../subcommands/add.html">add</a></li><li class="chapter-item expanded "><a href="../../subcommands/add/data_source.html">data_source</a></li><li class="chapter-item expanded "><a href="../../subcommands/add/exploration.html" class="active">exploration</a></li><li class="chapter-item expanded "><a href="../../subcommands/add/model.html">model</a></li><li class="chapter-item expanded "><a href="../../subcommands/add/product.html">product</a></li><li class="chapter-item expanded affix "><a href="../../attribution.html">Image attribution</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -147,17 +147,20 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="model"><a class="header" href="#model">Model</a></h1>
+                        <p align="center">
+    <img src="../static/images/geoffrey-logo.png" class="logo">
+</p>
+<h1 id="exploration"><a class="header" href="#exploration">Exploration</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../commands/add/exploration.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../subcommands/add/data_source.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../../commands/add/product.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../subcommands/add/model.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -167,17 +170,33 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../commands/add/exploration.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../subcommands/add/data_source.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../../commands/add/product.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../../subcommands/add/model.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

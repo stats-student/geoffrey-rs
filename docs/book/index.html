@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html" class="active">Getting started</a></li><li class="chapter-item expanded affix "><a href="geoff.html">geoff</a></li><li class="chapter-item expanded affix "><a href="commands/create.html">create</a></li><li class="chapter-item expanded affix "><a href="commands/add.html">add</a></li><li class="chapter-item expanded "><a href="commands/add/data_source.html">data_source</a></li><li class="chapter-item expanded "><a href="commands/add/exploration.html">exploration</a></li><li class="chapter-item expanded "><a href="commands/add/model.html">model</a></li><li class="chapter-item expanded "><a href="commands/add/product.html">product</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html" class="active">Getting started</a></li><li class="chapter-item expanded affix "><a href="geoff.html">geoff</a></li><li class="chapter-item expanded affix "><a href="subcommands/create.html">create</a></li><li class="chapter-item expanded affix "><a href="subcommands/add.html">add</a></li><li class="chapter-item expanded "><a href="subcommands/add/data_source.html">data_source</a></li><li class="chapter-item expanded "><a href="subcommands/add/exploration.html">exploration</a></li><li class="chapter-item expanded "><a href="subcommands/add/model.html">model</a></li><li class="chapter-item expanded "><a href="subcommands/add/product.html">product</a></li><li class="chapter-item expanded affix "><a href="attribution.html">Image attribution</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -173,28 +173,28 @@ My general workflow for a data science project consists of 4 steps:
   </li>
 </ul>
 <p>Geoffrey allows you to create projects and add in each of these 4 components in a modular way.</p>
-<p>The quickstart is below and the manual for the different commands is <a href="docs/geoff.html">here</a></p>
+<p>The quickstart is below and the manual for the different commands is <a href="docs/src/geoff.html">here</a></p>
 <h3 id="quickstart"><a class="header" href="#quickstart">Quickstart</a></h3>
 <h5 id="installation"><a class="header" href="#installation">Installation</a></h5>
-<pre><code class="language-shell">foo@bar:~$ python -m pip install git+https://github.com/danielyates2/geoffrey#v0.1.1
-Collecting git+https://github.com/danielyates2/geoffrey#v0.1.1
-  Cloning https://github.com/danielyates2/geoffrey to /tmp/pip-req-build-3gtmwyf2
-  Running command git clone -q https://github.com/danielyates2/geoffrey /tmp/pip-req-build-3gtmwyf2
-  Installing build dependencies ... done
-  ...
-Successfully built geoffrey
+You can download the appropriate binary from the <a href="https://github.com/stats-student/geoffrey-rs/releases/download/v0.2.0/">installation page</a> or use wget (or something similar).
+<pre><code class="language-shell">foo@bar:~$ wget -q https://github.com/stats-student/geoffrey-rs/releases/download/v0.2.0/x86_64-unknown-linux-gnu.tar.gz
 </code></pre>
+<p>Then extract <strong>geoff</strong> from the tar file and if desired move to a folder that is in your <code>PATH</code></p>
+<pre><code class="language-shell">foo@bar:~$ tar -xf x86_64-unknown-linux-gnu.tar.gz
+foo@bar:~$ sudo mv x86_64-unknown-linux-gnu/geoff /usr/bin/
+</code></pre>
+<p>Now you can use geoff!</p>
 <h5 id="create-a-project"><a class="header" href="#create-a-project">Create a project</a></h5>
 <pre><code class="language-shell">foo@bar:~$ geoff create test_project
 🚀 test_project created!
 
 test_project
-├── 🖿 data_sources
-├── 🖿 explorations
-├── 🖿 models
-├── 🖿 products
-├── 🗋 README.md
-└── 🗋 project_scoping.md
+├─ 🖿 data_sources
+├─ 🖿 explorations
+├─ 🖿 models
+├─ 🖿 products
+├─ 🗎 README.md
+└─ 🗎 project_scoping.md
 </code></pre>
 <h5 id="add-a-data-source"><a class="header" href="#add-a-data-source">Add a data source</a></h5>
 <h5 id="add-an-exploration"><a class="header" href="#add-an-exploration">Add an exploration</a></h5>
@@ -224,6 +224,22 @@ test_project
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
