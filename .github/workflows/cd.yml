@@ -39,14 +39,19 @@ jobs:
     - name: Build binaries
       run: cargo build --target=${{ matrix.target }} --release
     
-    - name: Move binaries
+    - name: Move binaries (linux, mac)
+      if: ${{ matrix.os }} != windows-latest
       run: |
           mkdir ${{ matrix.target }} &&
-          ls -l . &&
-          ls -l target &&
-          ls -l target/${{ matrix.target }} &&
-          ls -l target/${{ matrix.target }}/release &&
           cp target/${{ matrix.target }}/release/geoff ${{ matrix.target }} &&
+          cp README.md ${{ matrix.target }} &&
+          tar -czvf ${{ matrix.target }}.tar.gz ${{ matrix.target }}
+    
+    - name: Move binaries (windows)
+      if: ${{ matrix.os }} == windows-latest
+      run: |
+          mkdir ${{ matrix.target }} &&
+          cp target/${{ matrix.target }}/release/geoff.exe ${{ matrix.target }} &&
           cp README.md ${{ matrix.target }} &&
           tar -czvf ${{ matrix.target }}.tar.gz ${{ matrix.target }}
       
