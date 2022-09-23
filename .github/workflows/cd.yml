@@ -39,6 +39,7 @@ jobs:
           cp target/$target/release/geoff $target &&
           cp README.md $target &&
           tar -czvf $target.tar.gz $target
+        done
     
     - uses: "marvinpinto/action-automatic-releases@latest"
         with:
