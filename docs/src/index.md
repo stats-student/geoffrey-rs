@@ -33,17 +33,20 @@ The quickstart is below and the manual for the different commands is <a href="do
 
 <h3>Quickstart</h3>
 <h5>Installation</h5>
+You can download the appropriate binary from the <a href="https://github.com/stats-student/geoffrey-rs/releases/download/v0.2.0/">installation page</a> or use wget (or something similar).
 
 ```shell
-foo@bar:~$ python -m pip install git+https://github.com/danielyates2/geoffrey#v0.1.1
-Collecting git+https://github.com/danielyates2/geoffrey#v0.1.1
-  Cloning https://github.com/danielyates2/geoffrey to /tmp/pip-req-build-3gtmwyf2
-  Running command git clone -q https://github.com/danielyates2/geoffrey /tmp/pip-req-build-3gtmwyf2
-  Installing build dependencies ... done
-  ...
-Successfully built geoffrey
+foo@bar:~$ wget -q https://github.com/stats-student/geoffrey-rs/releases/download/v0.2.0/x86_64-unknown-linux-gnu.tar.gz
 ```
 
+Then extract **geoff** from the tar file and if desired move to a folder that is in your `PATH`
+
+```shell
+foo@bar:~$ tar -xf x86_64-unknown-linux-gnu.tar.gz
+foo@bar:~$ sudo mv x86_64-unknown-linux-gnu/geoff /usr/bin/
+```
+
+Now you can use geoff!
 <h5>Create a project</h5>
 
 ```shell
@@ -51,12 +54,12 @@ foo@bar:~$ geoff create test_project
 🚀 test_project created!
 
 test_project
-├── 🖿 data_sources
-├── 🖿 explorations
-├── 🖿 models
-├── 🖿 products
-├── 🗋 README.md
-└── 🗋 project_scoping.md
+├─ 🖿 data_sources
+├─ 🖿 explorations
+├─ 🖿 models
+├─ 🖿 products
+├─ 🗎 README.md
+└─ 🗎 project_scoping.md
 ```
 
 <h5>Add a data source</h5>
