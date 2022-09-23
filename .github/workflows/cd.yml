@@ -40,7 +40,7 @@ jobs:
       run: cargo build --target=${{ matrix.target }} --release
     
     - name: Move binaries (linux, mac)
-      if: ${{ matrix.os != "windows-latest" }}
+      if: ${{ matrix.os != }} "windows-latest"
       run: |
           mkdir ${{ matrix.target }} &&
           cp target/${{ matrix.target }}/release/geoff ${{ matrix.target }} &&
@@ -48,7 +48,7 @@ jobs:
           tar -czvf ${{ matrix.target }}.tar.gz ${{ matrix.target }}
     
     - name: Move binaries (windows)
-      if: ${{ matrix.os == "windows-latest" }}
+      if: ${{ matrix.os }} == "windows-latest"
       run: |
           mkdir ${{ matrix.target }} &&
           cp target/${{ matrix.target }}/release/geoff.exe ${{ matrix.target }} &&
