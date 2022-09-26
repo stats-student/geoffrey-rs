@@ -56,7 +56,7 @@ Now you can use geoff!
 
 <h5>Create a project</h5>
 
-index```shell
+```shell
 foo@bar:~$ geoff create test_project
 🚀 test_project created!
 
