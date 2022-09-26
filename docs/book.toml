@@ -10,4 +10,3 @@ no-section-label = true
 git-repository-url = "https://github.com/stats-student/geoffrey"
 git-repository-icon = "fa-github"
 additional-css = ["theme/my-css.css"]
-additional-js = ["theme/my-js.js"]

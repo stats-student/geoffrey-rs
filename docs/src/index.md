@@ -29,8 +29,6 @@ My general workflow for a data science project consists of 4 steps:
 
 Geoffrey allows you to create projects and add in each of these 4 components in a modular way.
 
-The quickstart is below and the manual for the different commands is <a href="docs/src/geoff.md">here</a>
-
 <h3>Quickstart</h3>
 <h5>Installation</h5>
 You can download the appropriate binary from the <a href="https://github.com/stats-student/geoffrey-rs/releases/download/v0.2.0/">installation page</a> or use wget (or something similar).

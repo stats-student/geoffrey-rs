@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="../static/images/geoffrey-logo.png" class="logo">
+    <img src="../../static/images/geoffrey-logo.png" class="logo"/>
 </p>
 
 # geoff add data-source

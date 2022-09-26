@@ -323,7 +323,7 @@ function playground_text(playground) {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = false;
             stylesheets.highlight.disabled = true;
-            document.querySelector(".logo").src="static/images/geoffrey-logo-dark.png"
+            document.querySelector(".logo").src=path_to_root + "static/images/geoffrey-logo-dark.png";
 
             ace_theme = "ace/theme/tomorrow_night";
         } else if (theme == 'ayu') {
@@ -331,13 +331,13 @@ function playground_text(playground) {
             stylesheets.tomorrowNight.disabled = true;
             stylesheets.highlight.disabled = true;
             ace_theme = "ace/theme/tomorrow_night";
-            document.querySelector(".logo").src="static/images/geoffrey-logo-dark.png"
+            document.querySelector(".logo").src=path_to_root + "static/images/geoffrey-logo-dark.png";
         } else {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = true;
             stylesheets.highlight.disabled = false;
             ace_theme = "ace/theme/dawn";
-            document.querySelector(".logo").src="static/images/geoffrey-logo.png"
+            document.querySelector(".logo").src=path_to_root + "static/images/geoffrey-logo.png";
         }
 
         setTimeout(function () {

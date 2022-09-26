@@ -1,6 +1,7 @@
 # Summary
 
 [Getting started](./index.md)
+[Installation](./installation.md)
 [geoff](./geoff.md)
 [create](./subcommands/create.md)
 [add](./subcommands/add.md)
