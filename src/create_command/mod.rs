@@ -1,7 +1,8 @@
 use clap::Args;
 use console::Style;
+use log::{info};
 use ptree::{item, TreeBuilder};
-use std::{fs, io, path};
+use std::{collections, fs, io, path};
 
 #[derive(Args)]
 pub struct Create {
@@ -89,6 +90,8 @@ impl Create {
     }
 
     pub fn create_root(&self) {
+        info!("Creating project root at {}", self.name.display());
+
         let result: io::Result<()> = if self.parents {
             fs::create_dir_all(&self.name)
         } else {
@@ -102,6 +105,8 @@ impl Create {
         let subdirs = vec!["data_sources", "explorations", "models", "products"];
 
         for subdir in subdirs.iter() {
+            info!("Creating project sub directory: {}", subdir);
+
             let full_subdir = &format!("{}/{}/", self.name.display(), subdir);
             fs::create_dir(full_subdir).unwrap_or_else(
                 |_| panic!("Unable to create {}", full_subdir)
@@ -110,12 +115,18 @@ impl Create {
     }
 
     pub fn create_files(&self) {
-        let files = vec!["README.md", "project_scoping.md", ".geoff"];
+        let files = collections::HashMap::from([
+            ("README.md", include_bytes!("../templates/root/README.md")),
+            ("project_scoping.md", include_bytes!("../templates/root/project_scoping.md")),
+            (".geoff", include_bytes!("../templates/root/.geoff"))
+        ]);
 
-        for file in files.iter() {
-            let full_file_path = &format!("{}/{}", self.name.display(), file);
-            fs::write(full_file_path, "").unwrap_or_else(
-                |_| panic!("Unable to create {}", full_file_path)
+        for (filename, bytes) in files.iter() {
+            info!("Writing {} to root folder", filename);
+
+            let root_path: &String = &format!("{}/{}", self.name.display(), filename);
+            fs::write(root_path, bytes).unwrap_or_else(
+                |_| panic!("Unable to copy to {}", root_path)
             );
         }
     }
