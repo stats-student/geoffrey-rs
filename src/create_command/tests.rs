@@ -1,3 +1,4 @@
+use predicates::prelude::*;
 use std::{env, fs, path};
 use test_fixtures::test_in_tmp_dir;
 
@@ -194,7 +195,7 @@ fn files_created() -> () {
             let mut expected_files = vec![
                 path::PathBuf::from("test_project/README.md"),
                 path::PathBuf::from("test_project/project_scoping.md"),
-                path::PathBuf::from("test_project/.geoff"),
+                path::PathBuf::from("test_project/geoff.toml"),
             ];
 
             let mut actual_files = fs::read_dir("./test_project/")
@@ -205,6 +206,40 @@ fn files_created() -> () {
                 .collect::<Vec<_>>();
 
             assert_eq!(expected_files.sort(), actual_files.sort())
+        },
+        false,
+    )
+}
+
+// ++++++++++++++++++++ //
+// replace_placeholders //
+// ++++++++++++++++++++ //
+#[test]
+fn readme_proj_scope_placeholders_replaced() -> () {
+    test_in_tmp_dir(
+        || {
+            fs::create_dir("test_project").unwrap();
+
+            let create: Create = Create {
+                name: path::PathBuf::from("./test_project/"),
+                parents: false,
+            };
+
+            let files = collections::HashMap::from([
+                ("README.md", include_str!("../templates/root/README.md")),
+                (
+                    "project_scoping.md",
+                    include_str!("../templates/root/project_scoping.md"),
+                ),
+            ]);
+
+            for (_, contents) in files.iter() {
+                let updated_contents = create._update_placeholders(contents);
+
+                let file_contains = predicates::str::contains("# test_project");
+
+                assert!(file_contains.eval(&updated_contents))
+            }
         },
         false,
     )

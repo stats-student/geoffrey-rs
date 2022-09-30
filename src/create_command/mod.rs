@@ -1,6 +1,6 @@
 use clap::Args;
 use console::Style;
-use log::{info};
+use log::{debug, info};
 use ptree::{item, TreeBuilder};
 use std::{collections, fs, io, path};
 
@@ -89,6 +89,13 @@ impl Create {
         } // match result
     }
 
+    fn _update_placeholders(&self, file_contents: &&str) -> String {
+        file_contents.replace(
+            "<<<project_name>>>",
+            self.name.file_stem().unwrap().to_str().unwrap(),
+        )
+    }
+
     pub fn create_root(&self) {
         info!("Creating project root at {}", self.name.display());
 
@@ -108,26 +115,39 @@ impl Create {
             info!("Creating project sub directory: {}", subdir);
 
             let full_subdir = &format!("{}/{}/", self.name.display(), subdir);
-            fs::create_dir(full_subdir).unwrap_or_else(
-                |_| panic!("Unable to create {}", full_subdir)
-            );
+            fs::create_dir(full_subdir)
+                .unwrap_or_else(|_| panic!("Unable to create {}", full_subdir));
         }
     }
 
     pub fn create_files(&self) {
         let files = collections::HashMap::from([
-            ("README.md", include_bytes!("../templates/root/README.md")),
-            ("project_scoping.md", include_bytes!("../templates/root/project_scoping.md")),
-            (".geoff", include_bytes!("../templates/root/.geoff"))
+            ("README.md", include_str!("../templates/root/README.md")),
+            (
+                "project_scoping.md",
+                include_str!("../templates/root/project_scoping.md"),
+            ),
+            (".geoff", include_str!("../templates/root/.geoff")),
         ]);
 
-        for (filename, bytes) in files.iter() {
-            info!("Writing {} to root folder", filename);
+        for (filename, contents) in files.iter() {
+            debug!("Replacing placeholders in {}", filename);
 
-            let root_path: &String = &format!("{}/{}", self.name.display(), filename);
-            fs::write(root_path, bytes).unwrap_or_else(
-                |_| panic!("Unable to copy to {}", root_path)
-            );
+            if filename.starts_with(".") {
+                info!("Writing {} to root folder", filename);
+
+                let root_path: &String = &format!("{}/{}", self.name.display(), filename);
+                fs::write(&root_path, &contents)
+                    .unwrap_or_else(|_| panic!("Unable to copy to {}", &root_path));
+            } else {
+                let updated_contents = self._update_placeholders(&contents);
+
+                info!("Writing {} to root folder", filename);
+
+                let root_path: &String = &format!("{}/{}", self.name.display(), filename);
+                fs::write(&root_path, &updated_contents)
+                    .unwrap_or_else(|_| panic!("Unable to copy to {}", &root_path));
+            }
         }
     }
 
