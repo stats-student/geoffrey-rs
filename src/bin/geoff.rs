@@ -1,4 +1,6 @@
 use clap::{AppSettings, Parser, Subcommand};
+
+#[cfg(feature = "documentation")]
 use std::path;
 
 use geoffrey::create_command::Create;
@@ -15,6 +17,7 @@ struct Geoffrey {
 enum Commands {
     /// Creates a new data science project managed by geoffrey
     Create(Create),
+    #[cfg(feature = "documentation")]
     /// Builds a documentation site for the project
     BuildDocs {
         /// The location for the documentation website
@@ -61,6 +64,7 @@ fn main() {
             println!("\u{1F680} {} created!\n", name_str);
             ptree::print_tree(&tree).unwrap();
         }
+        #[cfg(feature = "documentation")]
         Some(Commands::BuildDocs { output: _ }) => {
             println!("build docs matched");
         }
