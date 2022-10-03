@@ -10,17 +10,32 @@ jobs:
     name: "Build release"
     strategy:
       matrix:
-        release: [linux, windows, mac]
+        release: [linux, linux_minimal, windows, windows_minimal, mac, mac_minimal]
         include:
         - release: linux
           os: ubuntu-latest
           target: x86_64-unknown-linux-gnu
+          features_arg: --all-features
+        - release: linux_minimal
+          os: ubuntu-latest
+          target: x86_64-unknown-linux-gnu
+          features_arg:  
         - release: windows
           os: windows-latest
           target: x86_64-pc-windows-gnu
+          features_arg: --all-features
+        - release: windows_minimal
+          os: windows-latest
+          target: x86_64-pc-windows-gnu
+          features_arg:  
         - release: mac
           os: macos-latest
           target: x86_64-apple-darwin
+          features_arg: --all-features
+        - release: mac_minimal
+          os: macos-latest
+          target: x86_64-apple-darwin
+          features_arg:
     
     runs-on: ${{ matrix.os }}
     
@@ -37,29 +52,29 @@ jobs:
       uses: Swatinem/rust-cache@v2
 
     - name: Build binaries
-      run: cargo build --target=${{ matrix.target }} --release
+      run: cargo build --target=${{ matrix.target }} --release ${{ matrix.features_arg }}
     
     - name: Move binaries (linux, mac)
       run: |
-          mkdir ${{ matrix.target }} &&
-          cp target/${{ matrix.target }}/release/geoff ${{ matrix.target }} &&
-          cp README.md ${{ matrix.target }} &&
-          tar -czvf ${{ matrix.target }}.tar.gz ${{ matrix.target }}
+          mkdir ${{ matrix.release }} &&
+          cp target/${{ matrix.target }}/release/geoff ${{ matrix.release }} &&
+          cp README.md ${{ matrix.release }} &&
+          tar -czvf ${{ matrix.release }}.tar.gz ${{ matrix.release }}
       if: startsWith(matrix.os, 'macos-') || startsWith(matrix.os, 'ubuntu-')
     
     - name: Move binaries (windows)
       run: |
-          mkdir ${{ matrix.target }} &&
-          cp target/${{ matrix.target }}/release/geoff.exe ${{ matrix.target }} &&
-          cp README.md ${{ matrix.target }} &&
-          tar -czvf ${{ matrix.target }}.tar.gz ${{ matrix.target }}
+          mkdir ${{ matrix.release }} &&
+          cp target/${{ matrix.target }}/release/geoff.exe ${{ matrix.release }} &&
+          cp README.md ${{ matrix.release }} &&
+          tar -czvf ${{ matrix.release }}.tar.gz ${{ matrix.release }}
       if: startsWith(matrix.os, 'windows-')
       
     - name: Archive zip
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.os }}-binary
-        path: ${{ matrix.target }}.tar.gz
+        name: ${{ matrix.release }}-binary
+        path: ${{ matrix.release }}.tar.gz
 
   release-upload:
     name: "Upload release asset"
@@ -78,6 +93,9 @@ jobs:
       uses: softprops/action-gh-release@v1
       with: 
         files: |
-          macos-latest-binary/x86_64-apple-darwin.tar.gz
-          ubuntu-latest-binary/x86_64-unknown-linux-gnu.tar.gz
-          windows-latest-binary/x86_64-pc-windows-gnu.tar.gz
+          mac-binary/mac.tar.gz
+          mac_minimal-binary/mac_minimal.tar.gz
+          linux-binary/linux.tar.gz
+          linux_minimal-binary/linux_minimal.tar.gz
+          windows-binary/windows.tar.gz
+          windows_minimal-binary/windows_minimal.tar.gz

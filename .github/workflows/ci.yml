@@ -35,11 +35,17 @@ jobs:
     - name: Cache dependencies
       uses: Swatinem/rust-cache@v2
 
-    - name: Compile
+    - name: Compile (all features)
       run: cargo test --all-features --no-run --locked
 
-    - name: Run tests
+    - name: Run tests (all features)
       run: cargo test --all-features -- --test-threads=1
+
+    - name: Compile (no fetures)
+      run: cargo test --no-run --locked
+
+    - name: Run tests (no features)
+      run: cargo test -- --test-threads=1
 
   rust-cross:
     name: Rust Cross
@@ -60,10 +66,16 @@ jobs:
     - name: Cache Dependencies
       uses: Swatinem/rust-cache@v2
 
-    - name: Check
+    - name: Check (no features)
       run: |
         for target in ${{ env.targets }}; do
           cargo check --target=$target --all-targets
+        done
+
+    - name: Check (all features)
+      run: |
+        for target in ${{ env.targets }}; do
+          cargo check --all-features --target=$target --all-targets
         done
   
   fmt:
