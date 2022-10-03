@@ -40,6 +40,8 @@ enum AddCommands {
 }
 
 fn main() {
+    env_logger::init();
+
     let cli = Geoffrey::parse();
 
     match &cli.command {
