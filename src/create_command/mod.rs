@@ -16,10 +16,30 @@ pub struct Create {
 }
 
 impl Create {
+    /// Initialises a new style that can apply the given colour to text
+    ///
+    /// Initialises a console::Style struct with the given xterm 256 colours
+    /// which can then be applied to text.
+    /// 
+    /// # Arguments:
+    ///
+    /// * `col_256` - The xterm number for the required colour 
+    /// 
+    /// # Returns:
+    ///
+    /// * A console::Style struct with the xterm colour that was passed
     fn _colour(&self, col_256: u8) -> Style {
         Style::new().color256(col_256)
     }
 
+    /// Writes a better error message to stderr for already exists errors
+    /// 
+    /// Writes a more user friendly error message to stderr and then panics with
+    /// the error that caused the problem.
+    /// 
+    /// # Arguments
+    /// 
+    /// * `err` A reference to the io::Error that is being handled
     fn _already_exists_err_msg(&self, err: &io::Error) {
         eprintln!(
             "{} {}\n",
@@ -27,9 +47,17 @@ impl Create {
             self._colour(9)
                 .apply_to("already exists, please pick a different name")
         );
-        panic!("{} exists\n{:?}", self.name.display(), err);
+        panic!("{} exists\n{:?}", &self.name.display(), err);
     }
 
+    /// Writes a better error message to stderr for not found errors
+    /// 
+    /// Writes a more user friendly error message to stderr and then panics with
+    /// the error that caused the problem.
+    /// 
+    /// # Arguments
+    /// 
+    /// * `err` A reference to the io::Error that is being handled
     fn _not_found_err_msg(&self, err: &io::Error) {
         eprintln!(
             "{} {} {}",
@@ -46,6 +74,14 @@ impl Create {
         panic!("Parents don't exist\n{:?}", err);
     }
 
+    /// Writes a better error message to stderr for permission denied errors
+    /// 
+    /// Writes a more user friendly error message to stderr and then panics with
+    /// the error that caused the problem.
+    /// 
+    /// # Arguments
+    /// 
+    /// * `err` A reference to the io::Error that is being handled
     fn _permission_denied_err_msg(&self, err: &io::Error) {
         eprintln!(
             "{} {} {}",
@@ -60,6 +96,15 @@ impl Create {
         panic!("Invalid permissions\n{:?}", err);
     }
 
+    /// Writes a better error message to stderr for all other errors
+    /// 
+    /// Writes a more user friendly error message to stderr and then panics with
+    /// the error that caused the problem. This message is used when the error
+    /// kind is not AlreadyExists, NotFound or PermissionDenied
+    /// 
+    /// # Arguments
+    /// 
+    /// * `err` A reference to the io::Error that is being handled
     fn _generic_err_msg(&self, err: &io::Error) {
         eprintln!(
             "{} {}\n",
@@ -73,6 +118,16 @@ impl Create {
         panic!("{:?}", err);
     }
 
+    /// Handles the errors from the folder creation and prints friendlier messages
+    /// 
+    /// This function matches on the three possible errors that might be returned
+    /// by the fs::create_dir_all function. Once matched it writes a helpful
+    /// message to stderr and then panics with the error. If it matches any other
+    /// error the user is pointed to the github issues page for the project.
+    /// 
+    /// # Arguments
+    /// 
+    /// * `err` - The result from the root folder creation.
     fn _validate_create_result(&self, err: &io::Result<()>) {
         match err {
             Ok(_) => (),
@@ -89,15 +144,35 @@ impl Create {
         } // match result
     }
 
+    /// Replaces placeholder tags in the template files
+    /// 
+    /// Each of the template files has tags that are replaced with information
+    /// specific to the project. At the moment the only tags that are replaced
+    /// are for the project name. Placeholder tags are denoted by 3 angled brackets
+    /// e.g "<<<placeholder>>>"
+    /// 
+    /// # Arguments
+    /// 
+    /// * `file_contents` - Refernce to a string literal containing the contents
+    ///                     of a template file
+    /// 
+    /// # Returns
+    /// 
+    /// * A String containing the file_contents with placeholders replaced
     fn _update_placeholders(&self, file_contents: &&str) -> String {
         file_contents.replace(
             "<<<project_name>>>",
-            self.name.file_stem().unwrap().to_str().unwrap(),
+            &self.name.file_stem().unwrap().to_str().unwrap(),
         )
     }
 
+    /// Creates a directory that will be the root of the project
+    /// 
+    /// Creates a directory from either a name or path. It checks to see if the 
+    /// CreateCommand structs parents attribute is true and creates all parents
+    /// in the path if necessary. 
     pub fn create_root(&self) {
-        info!("Creating project root at {}", self.name.display());
+        info!("Creating project root at {}", &self.name.display());
 
         let result: io::Result<()> = if self.parents {
             fs::create_dir_all(&self.name)
@@ -108,18 +183,27 @@ impl Create {
         self._validate_create_result(&result);
     } // fn create_root
 
+    /// Creates the subdirectories within the project root
+    ///
+    /// Creates the 4 subdirectories (data_sources/, explorations/, models/ and products/)
+    /// within the root directory.
     pub fn create_subdirectories(&self) {
         let subdirs = vec!["data_sources", "explorations", "models", "products"];
 
         for subdir in subdirs.iter() {
-            info!("Creating project sub directory: {}", subdir);
+            info!("Creating project sub directory: {}", &subdir);
 
-            let full_subdir = &format!("{}/{}/", self.name.display(), subdir);
-            fs::create_dir(full_subdir)
-                .unwrap_or_else(|_| panic!("Unable to create {}", full_subdir));
+            let full_subdir = &format!("{}/{}/", &self.name.display(), &subdir);
+            fs::create_dir(&full_subdir)
+                .unwrap_or_else(|_| panic!("Unable to create {}", &full_subdir));
         }
     }
 
+
+    /// Creates the files within the project root
+    ///
+    /// Creates the 3 files (README.md, project_scoping.md, .geoff) located within the
+    /// project root
     pub fn create_files(&self) {
         let files = collections::HashMap::from([
             ("README.md", include_str!("../templates/root/README.md")),
@@ -133,28 +217,30 @@ impl Create {
         for (filename, contents) in files.iter() {
             debug!("Replacing placeholders in {}", filename);
 
-            if filename.starts_with(".") {
-                info!("Writing {} to root folder", filename);
+            let updated_contents: String;
 
-                let root_path: &String = &format!("{}/{}", self.name.display(), filename);
-                fs::write(&root_path, &contents)
-                    .unwrap_or_else(|_| panic!("Unable to copy to {}", &root_path));
+            if !filename.starts_with(".") {
+                updated_contents = self._update_placeholders(&contents);
             } else {
-                let updated_contents = self._update_placeholders(&contents);
-
-                info!("Writing {} to root folder", filename);
-
-                let root_path: &String = &format!("{}/{}", self.name.display(), filename);
-                fs::write(&root_path, &updated_contents)
-                    .unwrap_or_else(|_| panic!("Unable to copy to {}", &root_path));
+                updated_contents = contents.to_string();
             }
+
+            info!("Writing {} to root folder", filename);
+
+            let root_path: &String = &format!("{}/{}", &self.name.display(), filename);
+            fs::write(&root_path, &updated_contents)
+                .unwrap_or_else(|_| panic!("Unable to copy to {}", &root_path));
         }
     }
 
+    /// Creates a tree showing the files and folders created
+    ///
+    /// The tree shows all the files and folders that have been created when running
+    /// the `geoff create` command
     pub fn create_tree(&self) -> item::StringItem {
         let bold = Style::new().bold();
 
-        let tree = TreeBuilder::new(format!("{}", bold.apply_to("test_project")))
+        let tree = TreeBuilder::new(format!("{}", bold.apply_to(self.name.display())))
             .add_empty_child(format!(
                 "{} data_sources",
                 self._colour(220).apply_to("\u{1F5BF}")

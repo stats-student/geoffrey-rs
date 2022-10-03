@@ -271,7 +271,7 @@ fn prints_tree() -> () {
                 format!("{} project_scoping.md", hd.apply_to("\u{1F5CE}")),
             ];
 
-            assert_eq!(tree.text, format!("{}", bold.apply_to("test_project")));
+            assert_eq!(tree.text, format!("{}", bold.apply_to("./test_project/")));
             for i in 0..leaves.len() {
                 assert_eq!(tree.children[i].text, leaves[i])
             }
