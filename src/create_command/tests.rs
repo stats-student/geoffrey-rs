@@ -18,7 +18,7 @@ fn project_name_already_exists_error_raised() -> () {
     let already_exists_err = io::Error::new(io::ErrorKind::AlreadyExists, "test_error");
     let result = Err(already_exists_err);
 
-    create._validate_create_result(&result);
+    create.validate_create_folder_result(&create.name, &result);
 }
 
 #[test]
@@ -32,7 +32,7 @@ fn parents_dont_exist_error_raised() -> () {
     let not_found_err = io::Error::new(io::ErrorKind::NotFound, "test_error");
     let result = Err(not_found_err);
 
-    create._validate_create_result(&result);
+    create.validate_create_folder_result(&create.name, &result);
 }
 
 #[test]
@@ -46,8 +46,23 @@ fn invalid_permissions_error_raised() -> () {
     let permission_denied_err = io::Error::new(io::ErrorKind::PermissionDenied, "test_error");
     let result = Err(permission_denied_err);
 
-    create._validate_create_result(&result);
+    create.validate_create_folder_result(&create.name, &result);
 }
+
+#[test]
+#[should_panic(expected = "Unknown error")]
+fn generic_error_raised() -> () {
+    let create: Create = Create {
+        name: path::PathBuf::from("./test_project"),
+        parents: false,
+    };
+
+    let invalid_data_err = io::Error::new(io::ErrorKind::InvalidData, "test_error");
+    let result = Err(invalid_data_err);
+
+    create.validate_create_folder_result(&create.name, &result);
+}
+
 
 // +++++++++++ //
 // create_root //

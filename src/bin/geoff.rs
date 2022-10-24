@@ -6,7 +6,6 @@ use std::path;
 use geoffrey::create_command::Create;
 use geoffrey::add_command::{Add, AddCommands};
 
-
 #[derive(Parser)]
 #[clap(version, about, long_about = None, setting = AppSettings::SubcommandRequiredElseHelp)]
 struct Geoffrey {
@@ -58,21 +57,21 @@ fn main() {
         }
         Some(Commands::Add(add)) => {
             match &add.command {
-                Some(AddCommands::DataSource { name, database, extract, web }) => {
-                    let data_source_name = format!("data_sources/{}", name); // create_data_source
+                Some(AddCommands::DataSource(data_source)) => {
+                    let data_source_name = format!("data_sources/{}", data_source.name.display()); // create_data_source
 
-                    // get metadata contents
+                    // method to get metadata contents
                     let metadata_contents: &str;
 
-                    if *database {
+                    if data_source.database {
                         metadata_contents = include_str!(
                             "../templates/data_sources/database_metadata.md"
                         );
-                    } else if *extract {
+                    } else if data_source.extract {
                         metadata_contents = include_str!(
                             "../templates/data_sources/extract_metadata.md"
                         );
-                    } else if *web {
+                    } else if data_source.web {
                         metadata_contents = include_str!(
                             "../templates/data_sources/web_metadata.md"
                         );
@@ -87,7 +86,7 @@ fn main() {
                     data_source_metadata_path.push_str("/metadata.md");
 
                     let updated_contents = metadata_contents.replace(
-                        "<<<data_source_name>>>", name
+                        "<<<data_source_name>>>", &data_source.name.to_str().unwrap()
                     );
 
                     // create_data_source
@@ -109,7 +108,7 @@ fn main() {
                     .begin_child(format!(
                         "{} {}",
                         gold.apply_to("\u{1F5BF}"),
-                        name
+                        data_source.name.display()
                     ))
                     .add_empty_child(
                         format!(
