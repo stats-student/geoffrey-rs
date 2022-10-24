@@ -20,7 +20,7 @@ where
     let cwd: path::PathBuf = env::current_dir().expect("Unable to get current directory");
     let tmp_dir: path::PathBuf = create_random_tmp_dir().unwrap();
 
-    env::set_current_dir(&tmp_dir).expect("Unable to change directory");
+    env::set_current_dir(&tmp_dir).expect("Unable to change to tmp directory");
 
     // Test
     let result = panic::catch_unwind(|| test());

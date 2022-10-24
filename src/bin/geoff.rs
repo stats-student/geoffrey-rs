@@ -4,6 +4,8 @@ use clap::{AppSettings, Parser, Subcommand};
 use std::path;
 
 use geoffrey::create_command::Create;
+use geoffrey::add_command::{Add, AddCommands};
+
 
 #[derive(Parser)]
 #[clap(version, about, long_about = None, setting = AppSettings::SubcommandRequiredElseHelp)]
@@ -25,21 +27,7 @@ enum Commands {
         output: path::PathBuf,
     },
     /// Adds a new instance of a data source, exploration, model or product
-    Add {
-        #[clap(subcommand)]
-        command: Option<AddCommands>,
-    },
-}
-
-#[derive(Subcommand)]
-#[clap(setting = AppSettings::SubcommandRequiredElseHelp)]
-enum AddCommands {
-    /// Adds a data source instance
-    DataSource {
-        /// The name of the data source
-        #[clap(short, long)]
-        name: String,
-    },
+    Add(Add)
 }
 
 fn main() {
@@ -68,11 +56,79 @@ fn main() {
         Some(Commands::BuildDocs { output: _ }) => {
             println!("build docs matched");
         }
-        Some(Commands::Add { command: _ }) => {
-            println!("add matched");
+        Some(Commands::Add(add)) => {
+            match &add.command {
+                Some(AddCommands::DataSource { name, database, extract, web }) => {
+                    let data_source_name = format!("data_sources/{}", name); // create_data_source
+
+                    // get metadata contents
+                    let metadata_contents: &str;
+
+                    if *database {
+                        metadata_contents = include_str!(
+                            "../templates/data_sources/database_metadata.md"
+                        );
+                    } else if *extract {
+                        metadata_contents = include_str!(
+                            "../templates/data_sources/extract_metadata.md"
+                        );
+                    } else if *web {
+                        metadata_contents = include_str!(
+                            "../templates/data_sources/web_metadata.md"
+                        );
+                    } else {
+                        metadata_contents = include_str!(
+                            "../templates/data_sources/default_metadata.md"
+                        );
+                    }
+
+                    // create_metadata
+                    let mut data_source_metadata_path = data_source_name.clone();
+                    data_source_metadata_path.push_str("/metadata.md");
+
+                    let updated_contents = metadata_contents.replace(
+                        "<<<data_source_name>>>", name
+                    );
+
+                    // create_data_source
+                    std::fs::create_dir(&data_source_name)
+                        .unwrap_or_else(|_| panic!("Unable to create {}", &data_source_name));
+
+                    // create_metadata
+                    std::fs::write(&data_source_metadata_path, &updated_contents)
+                        .unwrap_or_else(|_| panic!("Unable to copy to {}", &data_source_metadata_path));
+
+                    // create tree
+                    let gold = console::Style::new().color256(220);
+                    let hd = console::Style::new().color256(194);
+
+                    let tree = ptree::TreeBuilder::new(format!(
+                        "{} data_sources",
+                        gold.apply_to("\u{1F5BF}")
+                    ))
+                    .begin_child(format!(
+                        "{} {}",
+                        gold.apply_to("\u{1F5BF}"),
+                        name
+                    ))
+                    .add_empty_child(
+                        format!(
+                            "{} metadata.md",
+                            hd.apply_to("\u{1F5CE}")
+                        )   
+                    )
+                    .end_child()
+                    .build();
+
+                    ptree::print_tree(&tree).unwrap();
+                }
+                None => {
+                    println!("Matched none");
+                }
+            }
         }
         None => {
-            println!("Matched non");
+            println!("Matched none");
         }
     }
 }

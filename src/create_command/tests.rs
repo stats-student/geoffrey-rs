@@ -254,7 +254,7 @@ fn readme_proj_scope_placeholders_replaced() -> () {
 // create_tree //
 // +++++++++++ //
 #[test]
-fn prints_tree() -> () {
+fn creates_tree() -> () {
     test_in_tmp_dir(
         || {
             let gold = Style::new().color256(220);

@@ -201,10 +201,6 @@ impl Create {
         let subdirs = vec!["data_sources", "explorations", "models", "products"];
 
         for subdir in subdirs.iter() {
-            let full_subdir = &format!("{}/{}/", self.name.display(), subdir);
-            fs::create_dir(full_subdir)
-                .unwrap_or_else(|_| panic!("Unable to create {}", full_subdir));
-
             info!("Creating project sub directory: {}", &subdir);
 
             let full_subdir = &format!("{}/{}/", &self.name.display(), &subdir);
