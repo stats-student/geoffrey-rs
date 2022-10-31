@@ -24,7 +24,7 @@ pub trait PleasantErrorHandler {
     /// # Arguments
     ///
     /// * `err` A reference to the io::Error that is being handled
-    fn already_exists_err_msg(&self, name: &path::PathBuf, err: &io::Error) -> () {
+    fn already_exists_err_msg(&self, name: &path::Path, err: &io::Error) {
         eprintln!(
             "{} {}\n",
             name.display(),
@@ -42,7 +42,7 @@ pub trait PleasantErrorHandler {
     /// # Arguments
     ///
     /// * `err` A reference to the io::Error that is being handled
-    fn not_found_err_msg(&self, name: &path::PathBuf, err: &io::Error) {
+    fn not_found_err_msg(&self, name: &path::Path, err: &io::Error) {
         eprintln!(
             "{} {} {}",
             self._colour(9).apply_to("One or more parents of"),
@@ -66,7 +66,7 @@ pub trait PleasantErrorHandler {
     /// # Arguments
     ///
     /// * `err` A reference to the io::Error that is being handled
-    fn permission_denied_err_msg(&self, name: &path::PathBuf, err: &io::Error) {
+    fn permission_denied_err_msg(&self, name: &path::Path, err: &io::Error) {
         eprintln!(
             "{} {} {}",
             self._colour(9)
@@ -112,7 +112,7 @@ pub trait PleasantErrorHandler {
     /// # Arguments
     ///
     /// * `err` - The result from the root folder creation.
-    fn validate_create_folder_result(&self, name: &path::PathBuf, err: &io::Result<()>) {
+    fn validate_create_folder_result(&self, name: &path::Path, err: &io::Result<()>) {
         match err {
             Ok(_) => (),
             Err(err) => {

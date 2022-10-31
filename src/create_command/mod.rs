@@ -52,7 +52,7 @@ impl Create {
     fn _update_placeholders(&self, file_contents: &&str) -> String {
         file_contents.replace(
             "<<<project_name>>>",
-            &self.name.file_stem().unwrap().to_str().unwrap(),
+            self.name.file_stem().unwrap().to_str().unwrap(),
         )
     }
 
@@ -119,13 +119,11 @@ impl Create {
         for (filename, contents) in files.iter() {
             debug!("Replacing placeholders in {}", filename);
 
-            let updated_contents: String;
-
-            if !filename.starts_with(".") {
-                updated_contents = self._update_placeholders(&contents);
+            let updated_contents: String = if !filename.starts_with('.') {
+                self._update_placeholders(contents)
             } else {
-                updated_contents = contents.to_string();
-            }
+                contents.to_string()
+            };
 
             info!("Writing {} to root folder", filename);
 

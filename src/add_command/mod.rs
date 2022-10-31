@@ -44,24 +44,22 @@ impl DataSource {
         }
     }
 
-    pub fn create_data_source(&self) -> () {
+    pub fn create_data_source(&self) {
         let result = fs::create_dir(format!("data_sources/{}", self.name.display()));
 
         self.validate_create_folder_result(&self.name, &result);
     }
 
     pub fn retrieve_metadata_contents(&self) -> &str {
-        let metadata_contents: &str;
-
-        if self.database {
-            metadata_contents = include_str!("../templates/data_sources/database_metadata.md");
+        let metadata_contents: &str = if self.database {
+            include_str!("../templates/data_sources/database_metadata.md")
         } else if self.extract {
-            metadata_contents = include_str!("../templates/data_sources/extract_metadata.md");
+            include_str!("../templates/data_sources/extract_metadata.md")
         } else if self.web {
-            metadata_contents = include_str!("../templates/data_sources/web_metadata.md");
+            include_str!("../templates/data_sources/web_metadata.md")
         } else {
-            metadata_contents = include_str!("../templates/data_sources/default_metadata.md");
-        }
+            include_str!("../templates/data_sources/default_metadata.md")
+        };
 
         metadata_contents
     }
@@ -75,7 +73,7 @@ impl DataSource {
         text.replace("<<<data_source_name>>>", name_str)
     }
 
-    pub fn create_metadata(&self, contents: &String) -> () {
+    pub fn create_metadata(&self, contents: &String) {
         let metadata_path = format!("data_sources/{}/metadata.md", self.name.display());
         fs::write(&metadata_path, contents)
             .unwrap_or_else(|_| panic!("Unable to copy to {}", &metadata_path));
