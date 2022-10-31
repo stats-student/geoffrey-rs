@@ -147,7 +147,9 @@ fn gets_correct_metadata_no_options() -> () {
 
     let metadata: &str = data_source.retrieve_metadata_contents();
 
-    let metadata_contents_fn = predicates::str::contains("# <<<data_source_name>>>");
+    let metadata_contents_fn = predicates::str::contains(
+        "# <<<data_source_name>>>\n\
+        ");
 
     assert!(metadata_contents_fn.eval(metadata))
 }
