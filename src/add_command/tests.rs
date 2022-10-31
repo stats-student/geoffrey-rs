@@ -1,6 +1,6 @@
 use console::Style;
 use predicates::prelude::*;
-use rstest::{rstest};
+use rstest::rstest;
 use std::{env, fs, path};
 use test_fixtures::test_in_tmp_dir;
 
@@ -16,10 +16,13 @@ use super::*;
 #[case(false, true, false)]
 #[case(false, false, true)]
 #[should_panic(expected = "This directory is not managed by geoff")]
-fn check_not_managed_by_geoff (
-    #[case] db_opt: bool, #[case] extract_opt: bool, #[case] web_opt: bool
+fn check_not_managed_by_geoff(
+    #[case] db_opt: bool,
+    #[case] extract_opt: bool,
+    #[case] web_opt: bool,
 ) -> () {
-    test_in_tmp_dir(|| {
+    test_in_tmp_dir(
+        || {
             fs::create_dir_all("test_project/data_sources").unwrap();
             env::set_current_dir("test_project").unwrap();
 
@@ -27,12 +30,12 @@ fn check_not_managed_by_geoff (
                 name: path::PathBuf::from("test_data_source"),
                 database: db_opt,
                 extract: extract_opt,
-                web: web_opt
+                web: web_opt,
             };
 
             data_source._geoff_check().unwrap();
         },
-        true
+        true,
     )
 }
 
@@ -41,10 +44,13 @@ fn check_not_managed_by_geoff (
 #[case(true, false, false)]
 #[case(false, true, false)]
 #[case(false, false, true)]
-fn check_managed_by_geoff (
-    #[case] db_opt: bool, #[case] extract_opt: bool, #[case] web_opt: bool
+fn check_managed_by_geoff(
+    #[case] db_opt: bool,
+    #[case] extract_opt: bool,
+    #[case] web_opt: bool,
 ) -> () {
-    test_in_tmp_dir(|| {
+    test_in_tmp_dir(
+        || {
             fs::create_dir_all("test_project/data_sources").unwrap();
             env::set_current_dir("test_project").unwrap();
             fs::File::create(".geoff").unwrap();
@@ -53,12 +59,12 @@ fn check_managed_by_geoff (
                 name: path::PathBuf::from("test_data_source"),
                 database: db_opt,
                 extract: extract_opt,
-                web: web_opt
+                web: web_opt,
             };
 
             data_source._geoff_check().unwrap();
         },
-        false
+        false,
     )
 }
 
@@ -72,24 +78,28 @@ fn check_managed_by_geoff (
 #[case(false, true, false)]
 #[case(false, false, true)]
 fn check_data_source_is_created(
-    #[case] db_opt: bool, #[case] extract_opt: bool, #[case] web_opt: bool 
+    #[case] db_opt: bool,
+    #[case] extract_opt: bool,
+    #[case] web_opt: bool,
 ) -> () {
-    test_in_tmp_dir(||{
-        fs::create_dir_all("test_project/data_sources").unwrap();
-        env::set_current_dir("test_project").unwrap();
+    test_in_tmp_dir(
+        || {
+            fs::create_dir_all("test_project/data_sources").unwrap();
+            env::set_current_dir("test_project").unwrap();
 
-        let data_source = DataSource {
-            name: path::PathBuf::from("test_data_source"),
-            database: db_opt,
-            extract: extract_opt,
-            web: web_opt
-        };
+            let data_source = DataSource {
+                name: path::PathBuf::from("test_data_source"),
+                database: db_opt,
+                extract: extract_opt,
+                web: web_opt,
+            };
 
-        data_source.create_data_source();
+            data_source.create_data_source();
 
-        assert!(path::Path::new("./data_sources/test_data_source").exists())
-    },
-    false)
+            assert!(path::Path::new("./data_sources/test_data_source").exists())
+        },
+        false,
+    )
 }
 
 #[rstest]
@@ -99,7 +109,9 @@ fn check_data_source_is_created(
 #[case(false, false, true)]
 #[should_panic(expected = "test_data_source exists")]
 fn errors_on_dir_already_exists(
-    #[case] db_opt: bool, #[case] extract_opt: bool, #[case] web_opt: bool 
+    #[case] db_opt: bool,
+    #[case] extract_opt: bool,
+    #[case] web_opt: bool,
 ) -> () {
     test_in_tmp_dir(
         || {
@@ -111,11 +123,10 @@ fn errors_on_dir_already_exists(
                 name: path::PathBuf::from("test_data_source"),
                 database: db_opt,
                 extract: extract_opt,
-                web: web_opt
+                web: web_opt,
             };
 
             data_source.create_data_source();
-
         },
         true,
     )
@@ -131,13 +142,13 @@ fn gets_correct_metadata_no_options() -> () {
         name: path::PathBuf::from("test_data_source"),
         database: false,
         extract: false,
-        web: false
+        web: false,
     };
 
     let metadata: &str = data_source.retrieve_metadata_contents();
 
     let metadata_contents_fn = predicates::str::contains("# <<<data_source_name>>>");
-    
+
     assert!(metadata_contents_fn.eval(metadata))
 }
 
@@ -147,12 +158,13 @@ fn gets_correct_metadata_database() -> () {
         name: path::PathBuf::from("test_data_source"),
         database: true,
         extract: false,
-        web: false
+        web: false,
     };
 
     let metadata: &str = data_source.retrieve_metadata_contents();
 
-    let metadata_contents_fn = predicates::str::contains("# <<<data_source_name>>>\n\
+    let metadata_contents_fn = predicates::str::contains(
+        "# <<<data_source_name>>>\n\
         \n\
         ## Database details\n\
         \n\
@@ -171,11 +183,11 @@ fn gets_correct_metadata_database() -> () {
         \n\
         | name | details |\n\
         | :--- | :------ |\n\
-        | *e.g Ronald Fisher* | *Gathered the data and is the subject metter expert* |");
-    
+        | *e.g Ronald Fisher* | *Gathered the data and is the subject metter expert* |",
+    );
+
     assert!(metadata_contents_fn.eval(metadata))
 }
-
 
 #[test]
 fn gets_correct_metadata_extract() -> () {
@@ -183,7 +195,7 @@ fn gets_correct_metadata_extract() -> () {
         name: path::PathBuf::from("test_data_source"),
         database: false,
         extract: true,
-        web: false
+        web: false,
     };
 
     let metadata: &str = data_source.retrieve_metadata_contents();
@@ -209,7 +221,7 @@ fn gets_correct_metadata_extract() -> () {
         | :--- | :------ |\n\
         | *e.g Ronald Fisher* | *Gathered the data and is the subject metter expert. Ron and the data collection team have access to the database and extracted it to a csv* |\n\
     ");
-    
+
     assert!(metadata_contents_fn.eval(metadata))
 }
 
@@ -219,7 +231,7 @@ fn gets_correct_metadata_web() -> () {
         name: path::PathBuf::from("test_data_source"),
         database: false,
         extract: false,
-        web: true
+        web: true,
     };
 
     let metadata: &str = data_source.retrieve_metadata_contents();
@@ -246,7 +258,7 @@ fn gets_correct_metadata_web() -> () {
         | *e.g Ronald Fisher* | *Gathered the data and is the subject metter expert* |\n\
         | *e.g Michael Marshall* | *(MARSHALL%PLU@io.arc.nasa.gov) Donated the dataset to the UCI machine learning repository* |\n\
     ");
-    
+
     assert!(metadata_contents_fn.eval(metadata))
 }
 
@@ -254,20 +266,21 @@ fn gets_correct_metadata_web() -> () {
 // update_placeholders //
 // +++++++++++++++++++ //
 
-
 #[rstest]
 #[case(false, false, false)]
 #[case(true, false, false)]
 #[case(false, true, false)]
 #[case(false, false, true)]
 fn replace_placeholder_tags(
-    #[case] db_opt: bool, #[case] extract_opt: bool, #[case] web_opt: bool
+    #[case] db_opt: bool,
+    #[case] extract_opt: bool,
+    #[case] web_opt: bool,
 ) -> () {
     let data_source = DataSource {
         name: path::PathBuf::from("test_data_source"),
         database: db_opt,
         extract: extract_opt,
-        web: web_opt
+        web: web_opt,
     };
 
     let replaced_str = data_source.update_placeholders(&"# <<<data_source_name>>>");
@@ -284,10 +297,13 @@ fn replace_placeholder_tags(
 #[case(true, false, false)]
 #[case(false, true, false)]
 #[case(false, false, true)]
-fn metadata_file_created (
-    #[case] db_opt: bool, #[case] extract_opt: bool, #[case] web_opt: bool
+fn metadata_file_created(
+    #[case] db_opt: bool,
+    #[case] extract_opt: bool,
+    #[case] web_opt: bool,
 ) -> () {
-    test_in_tmp_dir(|| {
+    test_in_tmp_dir(
+        || {
             fs::create_dir_all("test_project/data_sources").unwrap();
             env::set_current_dir("test_project").unwrap();
             fs::create_dir("data_sources/test_data_source").unwrap();
@@ -296,17 +312,16 @@ fn metadata_file_created (
                 name: path::PathBuf::from("test_data_source"),
                 database: db_opt,
                 extract: extract_opt,
-                web: web_opt
+                web: web_opt,
             };
 
             data_source.create_metadata(&String::from("# test_data_source"));
 
             assert!(path::Path::new("data_sources/test_data_source/metadata.md").exists())
         },
-        false
+        false,
     )
 }
-
 
 // +++++++++++ //
 // create_tree //
@@ -316,9 +331,7 @@ fn metadata_file_created (
 #[case(true, false, false)]
 #[case(false, true, false)]
 #[case(false, false, true)]
-fn creates_tree(
-    #[case] db_opt: bool, #[case] extract_opt: bool, #[case] web_opt: bool
-) -> () {
+fn creates_tree(#[case] db_opt: bool, #[case] extract_opt: bool, #[case] web_opt: bool) -> () {
     test_in_tmp_dir(
         || {
             let gold = Style::new().color256(220);
@@ -328,15 +341,23 @@ fn creates_tree(
                 name: path::PathBuf::from("test_data_source"),
                 database: db_opt,
                 extract: extract_opt,
-                web: web_opt
+                web: web_opt,
             };
 
             let tree = data_source.create_tree();
 
-            assert_eq!(tree.text, format!("{} data_sources", gold.apply_to("\u{1F5BF}")));
-            assert_eq!(tree.children[0].text, format!("{} test_data_source", gold.apply_to("\u{1F5BF}")));
-            assert_eq!(tree.children[0].children[0].text, format!("{} metadata.md", hd.apply_to("\u{1F5CE}")));
-
+            assert_eq!(
+                tree.text,
+                format!("{} data_sources", gold.apply_to("\u{1F5BF}"))
+            );
+            assert_eq!(
+                tree.children[0].text,
+                format!("{} test_data_source", gold.apply_to("\u{1F5BF}"))
+            );
+            assert_eq!(
+                tree.children[0].children[0].text,
+                format!("{} metadata.md", hd.apply_to("\u{1F5CE}"))
+            );
         },
         false,
     )

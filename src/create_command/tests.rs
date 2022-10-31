@@ -63,7 +63,6 @@ fn generic_error_raised() -> () {
     create.validate_create_folder_result(&create.name, &result);
 }
 
-
 // +++++++++++ //
 // create_root //
 // +++++++++++ //

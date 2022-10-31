@@ -4,7 +4,6 @@ use rstest::rstest;
 use std::{env, fs, path, process};
 use test_fixtures::test_in_tmp_dir;
 
-
 #[rstest]
 #[case("")]
 #[case("--database")]
@@ -60,7 +59,7 @@ fn creates_files_default_data_source(#[case] option: &str) -> () {
 
             assert!(path::Path::new("./data_sources/test_data_source/metadata.md").exists())
         },
-        false
+        false,
     )
 }
 
@@ -87,7 +86,7 @@ fn prints_default_data_source_tree(#[case] option: &str) -> () {
             }
 
             cmd.assert().success().stdout(predicates::str::contains(
-                "🖿 data_sources\n└─ 🖿 test_data_source\n   └─ 🗎 metadata.md"
+                "🖿 data_sources\n└─ 🖿 test_data_source\n   └─ 🗎 metadata.md",
             ));
         },
         false,
@@ -109,12 +108,13 @@ fn default_metadata_has_only_title() -> () {
             cmd.arg("add").arg("data-source").arg("test_data_source");
             cmd.assert().success();
 
-            let contents = fs::read_to_string("./data_sources/test_data_source/metadata.md").unwrap();
+            let contents =
+                fs::read_to_string("./data_sources/test_data_source/metadata.md").unwrap();
             let file_contains = predicates::str::is_match("^# test_data_source\n$").unwrap();
-            
-            assert!(file_contains.eval(&contents))         
+
+            assert!(file_contains.eval(&contents))
         },
-        false
+        false,
     )
 }
 
@@ -132,16 +132,20 @@ fn database_metadata_contents_correct(#[case] option: &str) -> () {
 
             let mut cmd = process::Command::cargo_bin("geoff").unwrap();
 
-            cmd.arg("add").arg("data-source").arg(option).arg("test_data_source");
+            cmd.arg("add")
+                .arg("data-source")
+                .arg(option)
+                .arg("test_data_source");
             cmd.assert().success();
 
-            let contents = fs::read_to_string("./data_sources/test_data_source/metadata.md").unwrap();
+            let contents =
+                fs::read_to_string("./data_sources/test_data_source/metadata.md").unwrap();
             assert!(predicates::str::contains("# test_data_source").eval(&contents));
             assert!(predicates::str::contains("## Database details").eval(&contents));
             assert!(predicates::str::contains("## Data dictionary").eval(&contents));
             assert!(predicates::str::contains("## Key people").eval(&contents))
         },
-        false
+        false,
     )
 }
 
@@ -159,16 +163,20 @@ fn extract_metadata_contents_correct(#[case] option: &str) -> () {
 
             let mut cmd = process::Command::cargo_bin("geoff").unwrap();
 
-            cmd.arg("add").arg("data-source").arg(option).arg("test_data_source");
+            cmd.arg("add")
+                .arg("data-source")
+                .arg(option)
+                .arg("test_data_source");
             cmd.assert().success();
 
-            let contents = fs::read_to_string("./data_sources/test_data_source/metadata.md").unwrap();
+            let contents =
+                fs::read_to_string("./data_sources/test_data_source/metadata.md").unwrap();
             assert!(predicates::str::contains("# test_data_source").eval(&contents));
             assert!(predicates::str::contains("## Extract details").eval(&contents));
             assert!(predicates::str::contains("## Data dictionary").eval(&contents));
             assert!(predicates::str::contains("## Key people").eval(&contents))
         },
-        false
+        false,
     )
 }
 
@@ -186,16 +194,20 @@ fn web_metadata_contents_correct(#[case] option: &str) -> () {
 
             let mut cmd = process::Command::cargo_bin("geoff").unwrap();
 
-            cmd.arg("add").arg("data-source").arg(option).arg("test_data_source");
+            cmd.arg("add")
+                .arg("data-source")
+                .arg(option)
+                .arg("test_data_source");
             cmd.assert().success();
 
-            let contents = fs::read_to_string("./data_sources/test_data_source/metadata.md").unwrap();
+            let contents =
+                fs::read_to_string("./data_sources/test_data_source/metadata.md").unwrap();
             assert!(predicates::str::contains("# test_data_source").eval(&contents));
             assert!(predicates::str::contains("## Website details").eval(&contents));
             assert!(predicates::str::contains("## Data dictionary").eval(&contents));
             assert!(predicates::str::contains("## Key people").eval(&contents))
         },
-        false
+        false,
     )
 }
 
@@ -222,9 +234,8 @@ fn multiple_options_should_error(#[case] option: &str) -> () {
                 cmd.arg(opt);
             }
 
-            cmd.assert()
-               .failure();
+            cmd.assert().failure();
         },
-        false
+        false,
     )
 }

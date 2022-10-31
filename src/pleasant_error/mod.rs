@@ -17,14 +17,14 @@ pub trait PleasantErrorHandler {
     }
 
     /// Writes a better error message to stderr for already exists errors
-    /// 
+    ///
     /// Writes a more user friendly error message to stderr and then panics with
     /// the error that caused the problem.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `err` A reference to the io::Error that is being handled
-    fn already_exists_err_msg(&self, name: &path::PathBuf, err: &io::Error) -> (){
+    fn already_exists_err_msg(&self, name: &path::PathBuf, err: &io::Error) -> () {
         eprintln!(
             "{} {}\n",
             name.display(),
@@ -35,12 +35,12 @@ pub trait PleasantErrorHandler {
     }
 
     /// Writes a better error message to stderr for not found errors
-    /// 
+    ///
     /// Writes a more user friendly error message to stderr and then panics with
     /// the error that caused the problem.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `err` A reference to the io::Error that is being handled
     fn not_found_err_msg(&self, name: &path::PathBuf, err: &io::Error) {
         eprintln!(
@@ -59,12 +59,12 @@ pub trait PleasantErrorHandler {
     }
 
     /// Writes a better error message to stderr for permission denied errors
-    /// 
+    ///
     /// Writes a more user friendly error message to stderr and then panics with
     /// the error that caused the problem.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `err` A reference to the io::Error that is being handled
     fn permission_denied_err_msg(&self, name: &path::PathBuf, err: &io::Error) {
         eprintln!(
@@ -81,13 +81,13 @@ pub trait PleasantErrorHandler {
     }
 
     /// Writes a better error message to stderr for all other errors
-    /// 
+    ///
     /// Writes a more user friendly error message to stderr and then panics with
     /// the error that caused the problem. This message is used when the error
     /// kind is not AlreadyExists, NotFound or PermissionDenied
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `err` A reference to the io::Error that is being handled
     fn generic_err_msg(&self, err: &io::Error) {
         eprintln!(
@@ -103,14 +103,14 @@ pub trait PleasantErrorHandler {
     }
 
     /// Handles the errors from the folder creation and prints friendlier messages
-    /// 
+    ///
     /// This function matches on the three possible errors that might be returned
     /// by the fs::create_dir_all function. Once matched it writes a helpful
     /// message to stderr and then panics with the error. If it matches any other
     /// error the user is pointed to the github issues page for the project.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `err` - The result from the root folder creation.
     fn validate_create_folder_result(&self, name: &path::PathBuf, err: &io::Result<()>) {
         match err {

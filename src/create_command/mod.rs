@@ -17,7 +17,7 @@ pub struct Create {
     pub parents: bool,
 }
 
-impl PleasantErrorHandler for Create{}
+impl PleasantErrorHandler for Create {}
 
 impl Create {
     /// Creates a new style class to apply color to text
@@ -35,19 +35,19 @@ impl Create {
     }
 
     /// Replaces placeholder tags in the template files
-    /// 
+    ///
     /// Each of the template files has tags that are replaced with information
     /// specific to the project. At the moment the only tags that are replaced
     /// are for the project name. Placeholder tags are denoted by 3 angled brackets
     /// e.g "<<<placeholder>>>"
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `file_contents` - Refernce to a string literal containing the contents
     ///                     of a template file
-    /// 
+    ///
     /// # Returns
-    /// 
+    ///
     /// * A String containing the file_contents with placeholders replaced
     fn _update_placeholders(&self, file_contents: &&str) -> String {
         file_contents.replace(
@@ -99,7 +99,6 @@ impl Create {
                 .unwrap_or_else(|_| panic!("Unable to create {}", &full_subdir));
         }
     }
-
 
     /// Creates the files within the project root
     ///
