@@ -60,15 +60,11 @@ fn pleasant_error_invalid_permissions_error_raised() -> () {
 #[test]
 #[should_panic(expected = "Unknown error")]
 fn pleasant_error_generic_error_raised() -> () {
-    struct TestData {
-        name: path::PathBuf,
-    }
+    struct TestData {}
 
     impl PleasantErrorHandler for TestData {}
 
-    let test_data = TestData {
-        name: path::PathBuf::from("test_data"),
-    };
+    let test_data = TestData {};
 
     let invalid_data_err = io::Error::new(io::ErrorKind::InvalidData, "test_error");
 
