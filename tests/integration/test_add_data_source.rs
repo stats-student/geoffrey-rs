@@ -110,7 +110,12 @@ fn default_metadata_has_only_title() -> () {
 
             let contents =
                 fs::read_to_string("./data_sources/test_data_source/metadata.md").unwrap();
-            let file_contains = predicates::str::is_match("^# test_data_source$").unwrap();
+
+            let file_contains = if env::consts::OS == "windows" {
+                predicates::str::is_match("^# test_data_source\r\n$").unwrap()
+            } else {
+                predicates::str::is_match("^# test_data_source\n$").unwrap()
+            };
 
             assert!(file_contains.eval(&contents))
         },
