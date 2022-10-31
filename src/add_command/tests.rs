@@ -147,9 +147,7 @@ fn gets_correct_metadata_no_options() -> () {
 
     let metadata: &str = data_source.retrieve_metadata_contents();
 
-    let metadata_contents_fn = predicates::str::contains(
-        "# <<<data_source_name>>>\n\
-        ");
+    let metadata_contents_fn = predicates::str::contains("# <<<data_source_name>>>");
 
     assert!(metadata_contents_fn.eval(metadata))
 }
@@ -165,8 +163,7 @@ fn gets_correct_metadata_database() -> () {
 
     let metadata: &str = data_source.retrieve_metadata_contents();
 
-    let metadata_contents_fn = predicates::str::contains(
-        "# <<<data_source_name>>>\n\
+    let mut expected_contents = String::from("# <<<data_source_name>>>\n\
         \n\
         ## Database details\n\
         \n\
@@ -185,8 +182,13 @@ fn gets_correct_metadata_database() -> () {
         \n\
         | name | details |\n\
         | :--- | :------ |\n\
-        | *e.g Ronald Fisher* | *Gathered the data and is the subject metter expert* |",
-    );
+        | *e.g Ronald Fisher* | *Gathered the data and is the subject metter expert* |");
+
+    if env::consts::OS == "windows" {
+        expected_contents = expected_contents.replace("\n", "\r\n");
+    }
+
+    let metadata_contents_fn = predicates::str::contains(expected_contents);
 
     assert!(metadata_contents_fn.eval(metadata))
 }
@@ -202,7 +204,8 @@ fn gets_correct_metadata_extract() -> () {
 
     let metadata: &str = data_source.retrieve_metadata_contents();
 
-    let metadata_contents_fn = predicates::str::contains("# <<<data_source_name>>>\n\
+    let mut expected_contents = String::from(
+        "# <<<data_source_name>>>\n\
         \n\
         ## Extract details\n\
         \n\
@@ -224,6 +227,12 @@ fn gets_correct_metadata_extract() -> () {
         | *e.g Ronald Fisher* | *Gathered the data and is the subject metter expert. Ron and the data collection team have access to the database and extracted it to a csv* |\n\
     ");
 
+    if env::consts::OS == "windows" {
+        expected_contents = expected_contents.replace("\n", "\r\n");
+    }
+
+    let metadata_contents_fn = predicates::str::contains(expected_contents);
+
     assert!(metadata_contents_fn.eval(metadata))
 }
 
@@ -238,7 +247,8 @@ fn gets_correct_metadata_web() -> () {
 
     let metadata: &str = data_source.retrieve_metadata_contents();
 
-    let metadata_contents_fn = predicates::str::contains("# <<<data_source_name>>>\n\
+    let mut expected_contents = String::from(
+        "# <<<data_source_name>>>\n\
         \n\
         ## Website details\n\
         \n\
@@ -260,6 +270,12 @@ fn gets_correct_metadata_web() -> () {
         | *e.g Ronald Fisher* | *Gathered the data and is the subject metter expert* |\n\
         | *e.g Michael Marshall* | *(MARSHALL%PLU@io.arc.nasa.gov) Donated the dataset to the UCI machine learning repository* |\n\
     ");
+
+    if env::consts::OS == "windows" {
+        expected_contents = expected_contents.replace("\n", "\r\n");
+    }
+
+    let metadata_contents_fn = predicates::str::contains(expected_contents);
 
     assert!(metadata_contents_fn.eval(metadata))
 }
