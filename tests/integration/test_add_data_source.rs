@@ -110,7 +110,7 @@ fn default_metadata_has_only_title() -> () {
 
             let contents =
                 fs::read_to_string("./data_sources/test_data_source/metadata.md").unwrap();
-            let file_contains = predicates::str::is_match("^# test_data_source\n$").unwrap();
+            let file_contains = predicates::str::is_match("^# test_data_source$").unwrap();
 
             assert!(file_contains.eval(&contents))
         },
