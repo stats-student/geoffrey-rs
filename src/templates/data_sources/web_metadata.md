@@ -6,7 +6,6 @@
 | :------------ | :------------ | :------------ | :----------------- |
 | *e.g iris.data* | *e.g https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data* | *e.g 2022-01-01* | *e.g https://archive.ics.uci.edu/ml/datasets/iris* |
 
-
 ## Data dictionary
 
 | data field | data type | description |

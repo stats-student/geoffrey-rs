@@ -1,4 +1,5 @@
 use clap::{AppSettings, Args, Subcommand};
+use ptree::{TreeBuilder, item};
 use std::{fs, io, path};
 
 use crate::pleasant_error::PleasantErrorHandler;
@@ -51,6 +52,69 @@ impl DataSource {
         );
 
         self.validate_create_folder_result(&self.name, &result);
+    }
+
+    pub fn retrieve_metadata_contents(&self) -> &str {
+        let metadata_contents: &str;
+
+        if self.database {
+            metadata_contents = include_str!(
+                "../templates/data_sources/database_metadata.md"
+            );
+        } else if self.extract {
+            metadata_contents = include_str!(
+                "../templates/data_sources/extract_metadata.md"
+            );
+        } else if self.web {
+            metadata_contents = include_str!(
+                "../templates/data_sources/web_metadata.md"
+            );
+        } else {
+            metadata_contents = include_str!(
+                "../templates/data_sources/default_metadata.md"
+            );
+        }
+
+        metadata_contents
+    }
+
+    pub fn update_placeholders(&self, text: &&str) -> String {
+        let name_str = self.name.to_str().expect("Unable to convert data source name to str");
+
+        text.replace("<<<data_source_name>>>", name_str)
+    }
+
+    pub fn create_metadata(&self, contents: &String) -> () {
+        let metadata_path = format!("data_sources/{}/metadata.md", self.name.display());
+        fs::write(
+            &metadata_path,
+            contents
+        ).unwrap_or_else(|_| panic!("Unable to copy to {}", &metadata_path));
+    }
+
+    pub fn create_tree(&self) -> item::StringItem {
+        let gold = console::Style::new().color256(220);
+        let hd = console::Style::new().color256(194);
+
+        let tree = TreeBuilder::new(format!(
+            "{} data_sources",
+            gold.apply_to("\u{1F5BF}")
+        ))
+        .begin_child(format!(
+            "{} {}",
+            gold.apply_to("\u{1F5BF}"),
+            self.name.display()
+        ))
+        .add_empty_child(
+            format!(
+                "{} metadata.md",
+                hd.apply_to("\u{1F5CE}")
+            )   
+        )
+        .end_child()
+        .build();
+
+        tree
     }
 }
 

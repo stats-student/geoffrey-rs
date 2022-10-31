@@ -58,67 +58,22 @@ fn main() {
         Some(Commands::Add(add)) => {
             match &add.command {
                 Some(AddCommands::DataSource(data_source)) => {
-                    let data_source_name = format!("data_sources/{}", data_source.name.display()); // create_data_source
+                    data_source.create_data_source();
+                    
+                    let contents = data_source.retrieve_metadata_contents();
+                    let updated_contents = data_source.update_placeholders(&contents);
+                    data_source.create_metadata(&updated_contents);
+                    
+                    let tree = data_source.create_tree();
 
-                    // method to get metadata contents
-                    let metadata_contents: &str;
+                    let name_str = data_source
+                        .name
+                        .file_name()
+                        .unwrap()
+                        .to_str()
+                        .expect("name isn't a valid unicode string");
 
-                    if data_source.database {
-                        metadata_contents = include_str!(
-                            "../templates/data_sources/database_metadata.md"
-                        );
-                    } else if data_source.extract {
-                        metadata_contents = include_str!(
-                            "../templates/data_sources/extract_metadata.md"
-                        );
-                    } else if data_source.web {
-                        metadata_contents = include_str!(
-                            "../templates/data_sources/web_metadata.md"
-                        );
-                    } else {
-                        metadata_contents = include_str!(
-                            "../templates/data_sources/default_metadata.md"
-                        );
-                    }
-
-                    // create_metadata
-                    let mut data_source_metadata_path = data_source_name.clone();
-                    data_source_metadata_path.push_str("/metadata.md");
-
-                    let updated_contents = metadata_contents.replace(
-                        "<<<data_source_name>>>", &data_source.name.to_str().unwrap()
-                    );
-
-                    // create_data_source
-                    std::fs::create_dir(&data_source_name)
-                        .unwrap_or_else(|_| panic!("Unable to create {}", &data_source_name));
-
-                    // create_metadata
-                    std::fs::write(&data_source_metadata_path, &updated_contents)
-                        .unwrap_or_else(|_| panic!("Unable to copy to {}", &data_source_metadata_path));
-
-                    // create tree
-                    let gold = console::Style::new().color256(220);
-                    let hd = console::Style::new().color256(194);
-
-                    let tree = ptree::TreeBuilder::new(format!(
-                        "{} data_sources",
-                        gold.apply_to("\u{1F5BF}")
-                    ))
-                    .begin_child(format!(
-                        "{} {}",
-                        gold.apply_to("\u{1F5BF}"),
-                        data_source.name.display()
-                    ))
-                    .add_empty_child(
-                        format!(
-                            "{} metadata.md",
-                            hd.apply_to("\u{1F5CE}")
-                        )   
-                    )
-                    .end_child()
-                    .build();
-
+                    println!("\u{1F680} {} created!\n", name_str);
                     ptree::print_tree(&tree).unwrap();
                 }
                 None => {
