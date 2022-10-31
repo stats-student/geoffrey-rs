@@ -163,7 +163,8 @@ fn gets_correct_metadata_database() -> () {
 
     let metadata: &str = data_source.retrieve_metadata_contents();
 
-    let mut expected_contents = String::from("# <<<data_source_name>>>\n\
+    let mut expected_contents = String::from(
+        "# <<<data_source_name>>>\n\
         \n\
         ## Database details\n\
         \n\
@@ -182,7 +183,8 @@ fn gets_correct_metadata_database() -> () {
         \n\
         | name | details |\n\
         | :--- | :------ |\n\
-        | *e.g Ronald Fisher* | *Gathered the data and is the subject metter expert* |");
+        | *e.g Ronald Fisher* | *Gathered the data and is the subject metter expert* |",
+    );
 
     if env::consts::OS == "windows" {
         expected_contents = expected_contents.replace("\n", "\r\n");
